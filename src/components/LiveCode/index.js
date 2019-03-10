@@ -7,8 +7,8 @@ import transformModles from '@babel/plugin-transform-modules-commonjs';
 
 import styled from 'reshadow';
 
-import {stripIndent, codeBlock} from 'common-tags';
-import {LiveEditor, Editor, LiveError, LiveProvider} from 'react-live';
+import {codeBlock} from 'common-tags';
+import {Editor} from 'react-live';
 
 import './prismTemplateString';
 
@@ -162,7 +162,7 @@ const PG = ({children, filename, maxHeight = '200px'}) => {
                                 <Editor
                                     language="jsx"
                                     theme={undefined}
-                                    code={stripIndent(x)}
+                                    code={codeBlock(x)}
                                     onChange={code =>
                                         setState(st =>
                                             Object.assign([...st], {

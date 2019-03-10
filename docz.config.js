@@ -4,6 +4,8 @@ module.exports = {
     title: 'reshadow ⛱️',
     description: 'reshadow documentation',
     hashRouter: true,
+    repository: 'https://github.com/lttb/reshadow',
+    editBranch: 'feature/initial',
     themeConfig: {
         colors: {
             primary: '#1990b8',
@@ -21,19 +23,10 @@ module.exports = {
             },
         },
     },
-    menu: ['reshadow', 'setup'],
+    menu: ['reshadow', 'setup', 'lingting'],
     plugins: [
         css({
             preprocessor: 'postcss',
         }),
     ],
-    modifyBabelRc: babelrc => {
-        // babelrc.plugins.push([
-        //     require.resolve('reshadow/babel'),
-        //     {postcss: true, files: /\.css$/},
-        // ]);
-
-        console.log(babelrc);
-        return babelrc;
-    },
 };
