@@ -57,7 +57,9 @@ class ErrorBoundary extends React.Component {
     }
 }
 
-const PG = ({children}) => {
+let index = 0;
+
+const PG = ({children, filename, maxHeight = '200px'}) => {
     window.require = function(module) {
         switch (module) {
             case 'polished':
@@ -68,16 +70,25 @@ const PG = ({children}) => {
     };
 
     const React = require('react');
+    const polished = require('polished');
 
-    const [state, setState] = React.useState('');
+    const [state, setState] = React.useState(children.code);
+    const ref = React.useRef({});
+
+    if (!ref.current.hash) {
+        ref.current.hash = ++index;
+    }
 
     const transpile = data => {
         let res = null;
 
         try {
             const {code} = Babel.transform(
-                `import styled from 'reshadow';` + data.join('\n'),
-                defaultOptions,
+                `import styled from 'reshadow';` + data,
+                {
+                    ...defaultOptions,
+                    filename: filename + ref.current.hash,
+                },
             );
 
             res = code;
@@ -93,10 +104,12 @@ const PG = ({children}) => {
     let element = null;
 
     try {
-        element = eval(state || transpile(children.code));
+        element = eval(transpile(state.join('\n')));
     } catch (e) {
         console.error(e);
     }
+
+    const {parts = {}} = children;
 
     return styled`
         root {
@@ -107,17 +120,20 @@ const PG = ({children}) => {
         }
 
         editor {
+            flex: 1;
             font-size: 12px;
-            flex-grow: 1;
-            padding-right: 25px;
 
-            & html|pre:focus {
-                outline: none;
+            & html|pre {
+                margin: 0;
+
+                &:focus {
+                    outline: none;
+                }
             }
         }
 
         part {
-            max-height: 300px;
+            max-height: ${maxHeight};
             overflow: scroll;
             background: #f6f8fa;
             padding: 5px 10px;
@@ -129,8 +145,8 @@ const PG = ({children}) => {
         }
 
         preview {
+            flex: 1;
             display: flex;
-            flex-grow: 1;
             align-items: center;
             justify-content: center;
             border-radius: 0px 10px 10px 0px;
@@ -139,16 +155,25 @@ const PG = ({children}) => {
     `(
         <root>
             <editor>
-                {children.code.map((x, i) => (
-                    <part key={i}>
-                        <Editor
-                            language="jsx"
-                            theme={undefined}
-                            code={stripIndent(x)}
-                            onChange={code => setState(transpile(code))}
-                        />
-                    </part>
-                ))}
+                {state.map(
+                    (x, i) =>
+                        !(parts[i] && parts[i].hidden) && (
+                            <part key={i}>
+                                <Editor
+                                    language="jsx"
+                                    theme={undefined}
+                                    code={stripIndent(x)}
+                                    onChange={code =>
+                                        setState(st =>
+                                            Object.assign([...st], {
+                                                [i]: code,
+                                            }),
+                                        )
+                                    }
+                                />
+                            </part>
+                        ),
+                )}
             </editor>
             <ErrorBoundary key={Math.random()}>
                 <preview>{element}</preview>

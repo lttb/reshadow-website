@@ -21,6 +21,7 @@ module.exports = {
             },
         },
     },
+    menu: ['reshadow', 'setup'],
     plugins: [
         css({
             preprocessor: 'postcss',
