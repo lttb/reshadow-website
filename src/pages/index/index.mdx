@@ -20,6 +20,10 @@ Write semantic styles and components, as the soul wants.
 
 > This project has `beta` status, so the API and the implementation could be changed.
 
+```sh
+npm install --save reshadow
+```
+
 **reshadow** provides the Shadow DOM developer experience, but for the Virtual DOM with the Component way.
 
 ## Features
@@ -33,23 +37,29 @@ Write semantic styles and components, as the soul wants.
 - All the benefits of the PostCSS ecosystem
 - Interoperable. Use it with `React`, `Preact` or `Vue`
 
-## Example
-
 Check examples on the [Сodesandbox](https://codesandbox.io):
 - [react (create react app)](https://codesandbox.io/s/o9w535k0z6)
 - [preact](https://codesandbox.io/s/o5jrpk0zm5)
 
-<Editor>{{
+## Special Thanks
+
+- Pavel Masalsky [@pavelrevers](https://github.com/pavelrevers)
+- Anton Kastritskiy [@antonk52](https://github.com/antonk52)
+
+## Usage
+
+- [css-in-js](##css-in-js)
+- [css-modules](##css-modules)
+
+### css-in-js
+
+Let's start with a `Button` Component.
+
+<Editor filename={__filename}>{{
     code: [
         `import {readableColor, rgba} from 'polished'`,
         `
-            const Button = ({
-
-                bgcolor = 'lightgray',
-                size = 's',
-                children,
-                ...props
-            }) => styled\`
+            const Button = ({bgcolor, children, ...props}) => styled\`
                 button {
                     cursor: pointer;
                     padding: 5px 10px;
@@ -57,58 +67,191 @@ Check examples on the [Сodesandbox](https://codesandbox.io):
                     border: 2px solid \${bgcolor};
                     background-color: \${rgba(bgcolor, 0.7)};
                     color: \${readableColor(bgcolor)};
-                    transition: background-color .5s;
-
+                    transition: background-color .5s;\n
                     &:hover {
                         background-color: \${rgba(bgcolor, 0.9)};
                     }
                 }
-
-                /**
-                * Match on the 'disabled' prop,
-                * not the DOM attribute
-                **/
-                button[disabled] {
-                    opacity: .5;
-                    pointer-events: none;
-                }
-
-                /**
-                * Match on the 'use:size' prop
-                */
-                button[use|size="s"] {
-                    font-size: 12px;
-                }
-
-                /* The 'use' namespace can be omitted */
-                button[|size="m"] {
-                    font-size: 14px;
-                }
             \`(
-                /* use:size property would not pass to the DOM */
-                <button use:size={size} {...props}>
+                <button {...props}>
                     {children}
                 </button>,
             );
         `,
-        `styled\`
-            Button + Button {
-                margin-left: 10px;
-            }
-        \`(
-            <div>
-                <Button size="m" bgcolor="lightgray">
-                    lightgray
-                </Button>
-                <Button size="m" bgcolor="orange">
-                    orange
-                </Button>
-                <Button size="m" bgcolor="rebeccapurple">
-                    rebeccapurple
-                </Button>
-            </div>
-        )`,
+        `
+            <Button bgcolor="rebeccapurple">
+                rebeccapurple
+            </Button>
+        `,
     ]
 }}
 </Editor>
 
+For the `Button` we might also want to add some styles for the `disabled` state. For that we can just match selector on the `disabled` **prop** (it's not the DOM attribute actually):
+
+<Editor filename={__filename}>{{
+    parts: {0: {hidden: true}},
+    code: [
+        `import {readableColor, rgba} from 'polished'`,
+        `
+            const Button = ({bgcolor, children, ...props}) => styled\`
+
+                button {
+                    cursor: pointer;
+                    padding: 5px 10px;
+                    border-radius: 5px;
+                    border: 2px solid \${bgcolor};
+                    background-color: \${rgba(bgcolor, 0.7)};
+                    color: \${readableColor(bgcolor)};
+                    transition: background-color .5s;\n
+                    &:hover:not([disabled]) {
+                        background-color: \${rgba(bgcolor, 0.9)};
+                    }
+                }
+                button[disabled] {
+                    cursor: not-allowed;
+                    opacity: .4;
+
+                    & content {
+                        pointer-events: none;
+                    }
+                }
+            \`(
+                <button {...props}>
+                    <content>{children}</content>
+                </button>,
+            );
+        `,
+        `
+            <Button disabled bgcolor="rebeccapurple">
+                rebeccapurple
+            </Button>
+        `,
+    ]
+}}
+</Editor>
+
+We can also add some `sizes` to the `Button`. `reshadow` allows to use namespaces for the custom elements' `modifiers`, that should not pass to the `DOM`. For example, you can add `use:size` attribute and match on the `[use|size]` or `[|size]` selector in styles.
+
+<Editor filename={__filename}>{{
+    parts: {0: {hidden: true}},
+    code: [
+        `import {readableColor, rgba} from 'polished'`,
+        `
+            const Button = ({
+
+                bgcolor,
+                size = 'm',
+                children,
+                ...props
+            }) => styled\`
+                button {
+                    cursor: pointer;
+                    border-radius: 5px;
+                    border: 2px solid \${bgcolor};
+                    background-color: \${rgba(bgcolor, 0.7)};
+                    color: \${readableColor(bgcolor)};
+                    transition: background-color .5s;\n
+                    &:hover:not([disabled]) {
+                        background-color: \${rgba(bgcolor, 0.9)};
+                    }
+                }
+                button[disabled] {
+                    cursor: not-allowed;
+                    opacity: .4;
+
+                    & content {
+                        pointer-events: none;
+                    }
+                }
+                button[use|size="s"] {
+                    padding: 4px 8px;
+                    font-size: 12px;
+                }
+                /* you can also omit the 'use' namespace */
+                button[|size="m"] {
+                    padding: 5px 10px;
+                    font-size: 14px;
+                }
+            \`(
+                <button use:size={size} {...props}>
+                    <content>{children}</content>
+                </button>,
+            );
+        `,
+        `
+            <Button disabled size="m" bgcolor="rebeccapurple">
+                rebeccapurple
+            </Button>
+        `,
+    ]
+}}
+</Editor>
+
+And it is also possible to match styles on the Components.
+
+<Editor filename={__filename}>{{
+    parts: {0: {hidden: true}, 1: {hidden: true}},
+    code: [
+        `import {readableColor, rgba} from 'polished'`,
+        `
+            const Button = ({
+
+                bgcolor,
+                size = 'm',
+                children,
+                ...props
+            }) => styled\`
+                button {
+                    cursor: pointer;
+                    border-radius: 5px;
+                    border: 2px solid \${bgcolor};
+                    background-color: \${rgba(bgcolor, 0.7)};
+                    color: \${readableColor(bgcolor)};
+                    transition: background-color .5s;\n
+                    &:hover:not([disabled]) {
+                        background-color: \${rgba(bgcolor, 0.9)};
+                    }
+                }
+                button[disabled] {
+                    cursor: not-allowed;
+                    opacity: .4;
+
+                    & content {
+                        pointer-events: none;
+                    }
+                }
+                button[use|size="s"] {
+                    padding: 4px 8px;
+                    font-size: 12px;
+                }
+                /* you can also omit the 'use' namespace */
+                button[|size="m"] {
+                    padding: 5px 10px;
+                    font-size: 14px;
+                }
+            \`(
+                <button use:size={size} {...props}>
+                    <content>{children}</content>
+                </button>,
+            );
+        `,
+        `
+            styled\`
+                Button + Button {
+                    margin-left: 10px;
+                }
+            \`(
+                <section>
+                    <Button bgcolor="lightgray">
+                        lightgray
+                    </Button>
+                    <Button bgcolor="rebeccapurple">
+                        rebeccapurple
+                    </Button>
+                </section>
+            )
+        `,
+    ]
+}}
+</Editor>
