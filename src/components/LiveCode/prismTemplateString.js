@@ -2,8 +2,6 @@ import Prism from 'prismjs';
 
 const {languages} = Prism;
 
-console.log(languages);
-
 // NOTE: This highlights template-strings as strings of CSS
 Prism.languages.insertBefore('jsx', 'template-string', {
     'styled-template-string': {

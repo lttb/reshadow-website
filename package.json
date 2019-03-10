@@ -27,6 +27,7 @@
         "docz-theme-default": "^0.13.7",
         "polished": "^3.0.3",
         "prismjs": "^1.15.0",
+        "react-lazyload": "^2.5.0",
         "reshadow": "^0.0.1-30"
     },
     "devDependencies": {

@@ -9,6 +9,7 @@ import styled from 'reshadow';
 
 import {codeBlock} from 'common-tags';
 import {Editor} from 'react-live';
+import LazyLoad from 'react-lazyload';
 
 import './prismTemplateString';
 
@@ -59,7 +60,7 @@ class ErrorBoundary extends React.Component {
 
 let index = 0;
 
-const PG = ({children, filename, maxHeight = '200px'}) => {
+const CodeEditor = ({children, filename, maxHeight = '200px'}) => {
     window.require = function(module) {
         switch (module) {
             case 'polished':
@@ -182,4 +183,8 @@ const PG = ({children, filename, maxHeight = '200px'}) => {
     );
 };
 
-export default PG;
+export default props => (
+    <LazyLoad height={200} offset={100} once>
+        <CodeEditor {...props} />
+    </LazyLoad>
+);
