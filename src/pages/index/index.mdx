@@ -95,7 +95,7 @@ Let's start with a `Button` Component.
 }}
 </Editor>
 
-For the `Button` we might also want to add some styles for the `disabled` state. For that we can just match selector on the `disabled` **prop** (it's not the DOM attribute actually):
+For the `Button` we might also want to add some styles for the `disabled` state. For that we can match selector on the `disabled` **prop** (it's not the DOM attribute, ie it will be transpiled into a class name):
 
 <Editor filename={__filename}>{{
     parts: {0: {hidden: true}},
@@ -139,7 +139,7 @@ For the `Button` we might also want to add some styles for the `disabled` state.
 }}
 </Editor>
 
-We can also add some `sizes` to the `Button`. `reshadow` allows to use namespaces for the custom elements' `modifiers`, that should not pass to the `DOM`. For example, you can add `use:size` attribute and match on the `[use|size]` or `[|size]` selector in styles.
+We can also add some `sizes` to the `Button`. `reshadow` allows to use namespaces for the custom elements' `modifiers`, which will not be passed the `DOM` nodes. For example, you can add `use:size` attribute and match on the `[use|size]` or `[|size]`(syntax sugar) selector in styles.
 
 <Editor filename={__filename}>{{
     parts: {0: {hidden: true}},
