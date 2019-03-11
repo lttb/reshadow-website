@@ -5,7 +5,7 @@ const {languages} = Prism;
 // NOTE: This highlights template-strings as strings of CSS
 Prism.languages.insertBefore('jsx', 'template-string', {
     'styled-template-string': {
-        pattern: /(styled|css)`(?:\$\{[^}]+\}|\\\\|\\?[^\\])*?`/,
+        pattern: /(styled(\(.*?\))?|css)`(?:\$\{[^}]+\}|\\\\|\\?[^\\])*?`/,
         lookbehind: true,
         greedy: true,
         inside: {

@@ -22,6 +22,17 @@ module.exports = {
             playground: {
                 background: '#fafafa',
             },
+            ul: {
+                '& &': {
+                    marginLeft: 25,
+
+                    '& li': {
+                        '&::before': {
+                            content: '"○ "',
+                        },
+                    },
+                },
+            },
         },
     },
     menu: ['reshadow', 'usage', 'setup', 'linting'],

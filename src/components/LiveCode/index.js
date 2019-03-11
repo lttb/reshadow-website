@@ -105,8 +105,6 @@ const CodeEditor = ({children, filename, maxHeight = '200px'}) => {
             console.error(e);
         }
 
-        console.log({res});
-
         return res;
     };
 
@@ -131,6 +129,7 @@ const CodeEditor = ({children, filename, maxHeight = '200px'}) => {
         editor {
             flex: 1;
             font-size: 12px;
+            max-width: 100%;
 
             & html|pre {
                 margin: 0;

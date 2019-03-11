@@ -16,10 +16,10 @@ Write semantic styles and components, as the soul wants.
 [![npm version](https://img.shields.io/npm/v/styled-jss.svg?style=flat-square)](https://www.npmjs.com/package/styled-jss)
 [![Babel Macro](https://img.shields.io/badge/babel--macro-%F0%9F%8E%A3-f5da55.svg?style=flat-square)](https://github.com/kentcdodds/babel-plugin-macros)
 
-> This project has `beta` status, so the API and the implementation could be changed.
+> This project has `alpha` status, so the API and the implementation could be changed.
 
 ```sh
-npm install --save reshadow
+npm install --save reshadow@alpha
 ```
 
 **reshadow** provides the Shadow DOM developer experience, but for the Virtual DOM with the Component way.
@@ -52,7 +52,7 @@ Check examples on the [Сodesandbox](https://codesandbox.io):
 import styled from 'reshadow';
 ```
 
-Let's start with a `Button` Component.
+Let's start with a simple `Button` component.
 
 <Editor filename={__filename}>{{
     files: {
@@ -87,18 +87,29 @@ Let's start with a `Button` Component.
 }}
 </Editor>
 
-And add some runtime to the Button styles.
+Note that with `styled(styles)` you can apply styles to the Virtual DOM. In addition, you can apply to the `styled` function any number of arguments, like `styled(styles1, styles2, ...)`, so the `styled` function will compose all of theme together.
+
+Okay, so let's add some runtime to the `Button` styles to make our `Button` more interactive.
 
 <Editor filename={__filename}>{{
-    code: [
-        `import {readableColor, rgba} from 'polished'`,
-        `
-        const Button = ({bgcolor, children, ...props}) => styled\`
+    files: {
+        './styles.css': `
             button {
                 font-size: 16px;
                 cursor: pointer;
                 padding: 10px 15px;
                 border-radius: 20px;
+            }
+        `
+    },
+    code: [
+        `
+        import {readableColor, rgba} from 'polished'
+
+        import styles from './styles.css'
+
+        const Button = ({bgcolor, children, ...props}) => styled(styles)\`
+            button {
                 border: 2px solid \${bgcolor};
                 background-color: \${rgba(bgcolor, 0.7)};
                 color: \${readableColor(bgcolor)};
@@ -122,34 +133,47 @@ And add some runtime to the Button styles.
 }}
 </Editor>
 
-For the `Button` we might also want to add some styles for the `disabled` state. For that we can match selector on the `disabled` **prop** (it's not the DOM attribute, ie it will be transpiled into a class name):
+Cool! You can also notice here that **reshadow** allows you to use `css-in-js` approaches with [template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals).
+Important notice here is that all styles were processed during the building, so **there is no runtime styles processing**.
+
+You can combine `css-modules` and `css-in-js` approaches like you or your team want.
+
+And now, for the `Button` we might also want to add some styles for the `disabled` state. For that we can match selector on the `disabled` **prop** (it's not the DOM attribute, ie it will be transpiled into a class name):
 
 <Editor filename={__filename}>{{
-    parts: {0: {hidden: true}},
-    code: [
-        `import {readableColor, rgba} from 'polished'`,
-        `
-            const Button = ({bgcolor, children, ...props}) => styled\`
+    files: {
+        './styles.css': `
 
+            button {
+                font-size: 16px;
+                cursor: pointer;
+                padding: 10px 15px;
+                border-radius: 20px;
+            }
+
+            button[disabled] {
+                cursor: not-allowed;
+                opacity: .4;
+
+                & content {
+                    pointer-events: none;
+                }
+            }
+        `
+    },
+    code: [
+        `
+            import {readableColor, rgba} from 'polished'
+            import styles from './styles.css'
+
+            const Button = ({bgcolor, children, ...props}) => styled(styles)\`
                 button {
-                    font-size: 16px;
-                    cursor: pointer;
-                    padding: 10px 15px;
-                    border-radius: 20px;
                     border: 2px solid \${bgcolor};
                     background-color: \${rgba(bgcolor, 0.7)};
                     color: \${readableColor(bgcolor)};
                     transition: background-color .5s;\n
                     &:hover:not([disabled]) {
                         background-color: \${rgba(bgcolor, 0.9)};
-                    }
-                }
-                button[disabled] {
-                    cursor: not-allowed;
-                    opacity: .4;
-
-                    & content {
-                        pointer-events: none;
                     }
                 }
             \`(
@@ -293,3 +317,5 @@ And it is also possible to match styles on the Components.
     ]
 }}
 </Editor>
+
+Please check the [advanced](/usage/advanced) docs to get more details about the **reshadow**.
