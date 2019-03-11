@@ -3,9 +3,9 @@ name: reshadow
 route: /
 ---
 
-import styled from 'reshadow'
+import styled from 'reshadow';
 
-import Editor from '@/components/LiveCode'
+import Editor from '@/components/LiveCode';
 
 # reshadow ⛱️
 
@@ -25,73 +25,100 @@ npm install --save reshadow
 **reshadow** provides the Shadow DOM developer experience, but for the Virtual DOM with the Component way.
 
 ## Features
-- Get away from additional abstractions
-    * Write isolated semantic styles for the Virtual DOM in a native like way
-    * Match styles on the elements, components, and props. That's all you need
-- Compile-time styles processing and efficient runtime
-- Static styles extracting options
-- Static analysis
-- Combine the css-in-js and css-modules approaches or choose which fits you better
-- All the benefits of the PostCSS ecosystem
-- Interoperable. Use it with `React`, `Preact` or `Vue`
+
+-   Get away from additional abstractions
+    -   Write isolated semantic styles for the Virtual DOM in a native like way
+    -   Match styles on the elements, components, and props. That's all you need
+-   Compile-time styles processing and efficient runtime
+-   Static styles extracting options
+-   Static analysis
+-   Combine the css-in-js and css-modules approaches or choose which fits you better
+-   All the benefits of the PostCSS ecosystem
+-   Interoperable. Use it with `React`, `Preact` or `Vue`
 
 Check examples on the [Сodesandbox](https://codesandbox.io):
-- [react (create react app)](https://codesandbox.io/s/o9w535k0z6)
-- [preact](https://codesandbox.io/s/o5jrpk0zm5)
+
+-   [react (create react app)](https://codesandbox.io/s/o9w535k0z6)
+-   [preact](https://codesandbox.io/s/o5jrpk0zm5)
 
 ## Special Thanks
 
-- Pavel Masalsky [@pavelrevers](https://github.com/pavelrevers)
-- Anton Kastritskiy [@antonk52](https://github.com/antonk52)
+-   Pavel Masalsky [@pavelrevers](https://github.com/pavelrevers)
+-   Anton Kastritskiy [@antonk52](https://github.com/antonk52)
 
 ## Basics
 
-With `reshadow/babel` plugin ([read more](/setup/#babel)):
 ```js
-import styled from 'reshadow'
+import styled from 'reshadow';
 ```
-
-With `babel-plugin-macros` ([read more](/setup/#macro)):
-```js
-import styled from 'reshadow/macro'
-```
-
-- [css-in-js](##css-in-js)
-- [css-modules](##css-modules)
-
-### css-in-js
 
 Let's start with a `Button` Component.
+
+<Editor filename={__filename}>{{
+    files: {
+        './styles.css': `
+            button {
+                font-size: 16px;
+                cursor: pointer;
+                padding: 10px 15px;
+                border-radius: 20px;
+                border: 2px solid rebeccapurple;
+                background-color: white;
+                color: rebeccapurple;
+            }
+        `
+    },
+    code: [
+        `
+        import styles from './styles.css'\n
+
+        const Button = ({children, ...props}) => styled(styles)(
+            <button {...props}>
+                {children}
+            </button>,
+        );
+        `,
+        `
+        <Button>
+            simple button
+        </Button>
+    `,
+    ],
+}}
+</Editor>
+
+And add some runtime to the Button styles.
 
 <Editor filename={__filename}>{{
     code: [
         `import {readableColor, rgba} from 'polished'`,
         `
-            const Button = ({bgcolor, children, ...props}) => styled\`
-                button {
-                    cursor: pointer;
-                    padding: 5px 10px;
-                    border-radius: 5px;
-                    border: 2px solid \${bgcolor};
-                    background-color: \${rgba(bgcolor, 0.7)};
-                    color: \${readableColor(bgcolor)};
-                    transition: background-color .5s;\n
-                    &:hover {
-                        background-color: \${rgba(bgcolor, 0.9)};
-                    }
+        const Button = ({bgcolor, children, ...props}) => styled\`
+            button {
+                font-size: 16px;
+                cursor: pointer;
+                padding: 10px 15px;
+                border-radius: 20px;
+                border: 2px solid \${bgcolor};
+                background-color: \${rgba(bgcolor, 0.7)};
+                color: \${readableColor(bgcolor)};
+                transition: background-color .5s;\n
+                &:hover {
+                    background-color: \${rgba(bgcolor, 0.9)};
                 }
-            \`(
-                <button {...props}>
-                    {children}
-                </button>,
-            );
-        `,
+            }
+        \`(
+            <button {...props}>
+                {children}
+            </button>,
+        );
+    `,
         `
-            <Button bgcolor="rebeccapurple">
-                rebeccapurple
-            </Button>
-        `,
-    ]
+        <Button bgcolor="rebeccapurple">
+            rebeccapurple
+        </Button>
+    `,
+    ],
 }}
 </Editor>
 
@@ -105,9 +132,10 @@ For the `Button` we might also want to add some styles for the `disabled` state.
             const Button = ({bgcolor, children, ...props}) => styled\`
 
                 button {
+                    font-size: 16px;
                     cursor: pointer;
-                    padding: 5px 10px;
-                    border-radius: 5px;
+                    padding: 10px 15px;
+                    border-radius: 20px;
                     border: 2px solid \${bgcolor};
                     background-color: \${rgba(bgcolor, 0.7)};
                     color: \${readableColor(bgcolor)};
@@ -155,7 +183,6 @@ We can also add some `sizes` to the `Button`. `reshadow` allows to use namespace
             }) => styled\`
                 button {
                     cursor: pointer;
-                    border-radius: 5px;
                     border: 2px solid \${bgcolor};
                     background-color: \${rgba(bgcolor, 0.7)};
                     color: \${readableColor(bgcolor)};
@@ -173,13 +200,15 @@ We can also add some `sizes` to the `Button`. `reshadow` allows to use namespace
                     }
                 }
                 button[use|size="s"] {
-                    padding: 4px 8px;
-                    font-size: 12px;
+                    font-size: 14px;
+                    padding: 8px 12px;
+                    border-radius: 16px;
                 }
                 /* you can also omit the 'use' namespace */
                 button[|size="m"] {
-                    padding: 5px 10px;
-                    font-size: 14px;
+                    font-size: 16px;
+                    padding: 10px 15px;
+                    border-radius: 20px;
                 }
             \`(
                 <button use:size={size} {...props}>
@@ -188,7 +217,7 @@ We can also add some `sizes` to the `Button`. `reshadow` allows to use namespace
             );
         `,
         `
-            <Button disabled size="m" bgcolor="rebeccapurple">
+            <Button disabled size="s" bgcolor="rebeccapurple">
                 rebeccapurple
             </Button>
         `,
@@ -212,7 +241,6 @@ And it is also possible to match styles on the Components.
             }) => styled\`
                 button {
                     cursor: pointer;
-                    border-radius: 5px;
                     border: 2px solid \${bgcolor};
                     background-color: \${rgba(bgcolor, 0.7)};
                     color: \${readableColor(bgcolor)};
@@ -230,13 +258,15 @@ And it is also possible to match styles on the Components.
                     }
                 }
                 button[use|size="s"] {
-                    padding: 4px 8px;
-                    font-size: 12px;
+                    font-size: 14px;
+                    padding: 8px 12px;
+                    border-radius: 16px;
                 }
                 /* you can also omit the 'use' namespace */
                 button[|size="m"] {
-                    padding: 5px 10px;
-                    font-size: 14px;
+                    font-size: 16px;
+                    padding: 10px 15px;
+                    border-radius: 20px;
                 }
             \`(
                 <button use:size={size} {...props}>

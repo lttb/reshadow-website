@@ -3,6 +3,7 @@ const {css} = require('docz-plugin-css');
 module.exports = {
     title: 'reshadow ⛱️',
     description: 'reshadow documentation',
+    dest: '/dist',
     hashRouter: true,
     repository: 'https://github.com/lttb/reshadow',
     editBranch: 'feature/initial',

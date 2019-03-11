@@ -33,7 +33,7 @@ const defaultOptions = {
         ['@babel/preset-react', {throwIfNamespace: false, useBuiltIns: true}],
     ],
     plugins: [
-        ['reshadow/babel', {postcss: true}],
+        ['reshadow/babel', {postcss: true, files: /\.css$/}],
         '@babel/plugin-transform-modules-commonjs',
     ],
 };
@@ -60,18 +60,19 @@ class ErrorBoundary extends React.Component {
 
 let index = 0;
 
-const CodeEditor = ({children, filename, maxHeight = '200px'}) => {
-    window.require = function(module) {
-        switch (module) {
-            case 'polished':
-                return require('polished');
-            case 'reshadow':
-                return require('reshadow');
-        }
-    };
+window.require = function(module) {
+    switch (module) {
+        case 'polished':
+            return require('polished');
+        case 'reshadow':
+            return require('reshadow');
+    }
+};
 
+const CodeEditor = ({children, filename, maxHeight = '200px'}) => {
     const React = require('react');
     const polished = require('polished');
+    const resolve = require('resolve');
 
     const [state, setState] = React.useState(children.code);
     const ref = React.useRef({});
@@ -80,7 +81,14 @@ const CodeEditor = ({children, filename, maxHeight = '200px'}) => {
         ref.current.hash = ++index;
     }
 
+    const {files = {}} = children;
+
     const transpile = data => {
+        if (children.files) {
+            resolve.sync = file => file;
+            fs.readFileSync = file => files[file];
+        }
+
         let res = null;
 
         try {
@@ -143,6 +151,17 @@ const CodeEditor = ({children, filename, maxHeight = '200px'}) => {
             & + part {
                 margin-top: 10px;
             }
+
+            & filename {
+                font-weight: bold;
+                padding: 0;
+                float: right;
+                font-size: 13px;
+                color: #29687d;
+                position: sticky;
+                top: 0;
+                right: 10px;
+            }
         }
 
         preview {
@@ -156,6 +175,21 @@ const CodeEditor = ({children, filename, maxHeight = '200px'}) => {
     `(
         <root>
             <editor>
+                {Object.keys(files).map(key => (
+                    <part key={key}>
+                        <filename>{key}</filename>
+                        <Editor
+                            language="scss"
+                            theme={undefined}
+                            code={codeBlock(files[key])}
+                            onChange={code => {
+                                files[key] = code;
+
+                                setState(st => [...st]);
+                            }}
+                        />
+                    </part>
+                ))}
                 {state.map(
                     (x, i) =>
                         !(parts[i] && parts[i].hidden) && (
