@@ -23,7 +23,7 @@ module.exports = {
             },
         },
     },
-    menu: ['reshadow', 'usage', 'setup', 'lingting'],
+    menu: ['reshadow', 'usage', 'setup', 'linting'],
     plugins: [
         css({
             preprocessor: 'postcss',
