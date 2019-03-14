@@ -8,7 +8,7 @@ module.exports = {
     hashRouter: true,
     // debug: true,
     repository: 'https://github.com/lttb/reshadow',
-    editBranch: 'feature/initial',
+    editBranch: 'master',
     themeConfig: {
         colors: {
             primary: '#1990b8',
