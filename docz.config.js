@@ -5,7 +5,7 @@ module.exports = {
     title: 'reshadow ⛱️',
     description: 'reshadow documentation',
     dest: '/dist',
-    hashRouter: false,
+    hashRouter: true,
     // debug: true,
     repository: 'https://github.com/lttb/reshadow',
     editBranch: 'feature/initial',
