@@ -1,0 +1,77 @@
+---
+name: setup
+route: /setup
+---
+
+# Setup
+
+## Macro
+
+With [CRA 2](https://github.com/facebook/create-react-app) (Create React App) or [babel-plugin-macros](https://github.com/kentcdodds/babel-plugin-macros) usage you can just use `reshadow/macro` out of the box.
+
+```js
+import React from 'react';
+import styled from 'reshadow/macro';
+
+export const Button = ({children}) =>
+    styled`
+    button {
+        /* button styles */
+    }
+`(<button>{children}</button>);
+```
+
+Options (via [babel-plugin-macros config](https://github.com/kentcdodds/babel-plugin-macros/blob/master/other/docs/author.md#config-experimental)) are the same as `reshadow` [babel options](#babel-options), but with different defaults:
+
+| option  | default value     |
+| ------- | ----------------- |
+| postcss | true              |
+| files   | /\.shadow\.css\$/ |
+
+## Babel
+
+Add `reshadow/babel` to the plugin list.
+
+`babel.config.js`
+
+```js
+module.exports = {
+    plugins: ['reshadow/babel'],
+};
+```
+
+### Options
+
+| option          | type                           | default value | description                                                                                    |
+| --------------- | ------------------------------ | ------------- | ---------------------------------------------------------------------------------------------- |
+| postcss         | boolean \| {plugins: Plugin[]} | false         | Use PostCSS to process CSS code. You can add your custom PostCSS plugins (they should be sync) |
+| files           | boolean \| RegExp              | false         | Resolve and process `css` files imports that match to the RegExp                               |
+| elementFallback | boolean \| string              | 'div'         | Use fallback for the custom elements                                                           |
+
+## PostCSS
+
+Add `reshadow/postcss` to the plugin list.
+
+`postcss.config.js`
+
+```js
+module.exports = {
+    plugins: ['reshadow/postcss'],
+};
+```
+
+## Webpack
+
+Use `reshadow/webpack/loader` to extract styles in separate files.
+
+_webpack.config.js_
+
+```js
+{
+    test: /\.js$/,
+    use: [
+        'reshadow/webpack/loader',
+        'babel-loader',
+    ]
+}
+```

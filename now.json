@@ -1,0 +1,8 @@
+{
+    "version": 2,
+    "name": "reshadow",
+    "builds": [{
+        "src": "package.json",
+        "use": "@now/static-build"
+    }]
+}
