@@ -5,7 +5,7 @@ module.exports = {
     title: 'reshadow ⛱️',
     description: 'reshadow documentation',
     dest: '/dist',
-    hashRouter: true,
+    hashRouter: false,
     // debug: true,
     repository: 'https://github.com/lttb/reshadow',
     editBranch: 'feature/initial',
@@ -37,7 +37,7 @@ module.exports = {
             },
         },
     },
-    menu: ['reshadow', 'usage', 'setup', 'linting'],
+    menu: ['reshadow', 'getting started', 'usage', 'setup', 'linting'],
     plugins: [
         css({
             preprocessor: 'postcss',

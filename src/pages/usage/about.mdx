@@ -5,4 +5,88 @@ order: 0
 route: /usage/about
 ---
 
-# Usage
+import Editor from '@/components/LiveCode';
+
+## Motivation
+
+The idea of **reshadow** came from the needs to develop the Design System, which includes the implementation of a lot of complex components, with different states, styles, experiments and themes.
+The main purpose of **reshadow** creation was an attempt to simplify the way how to style such complex components and systems.
+
+And what could be simplier than just... global styles? 😄
+
+Let's say we have a `button`, and we want to style it. The easiest way to do that is something like:
+
+```css
+button {
+    /* button styles */
+}
+```
+```js
+<button>click me</button>
+```
+
+It is also very clear how to style, for example, `disabled` button:
+
+```css
+button[disabled] {
+    pointer-events: none;
+    opacity: .4;
+}
+```
+```js
+<button disabled>click me</button>
+```
+
+But, of course nowadays we have a lot of [problems](/about/problems) with global styles, so we need to use abstractions like `BEM`, `css-modules` and so on.
+We also have `Shadow DOM`, which can fix some kind of that problems like incapsulation, but there are also [many tradeoffs](/about/shadow-dom), and it often doesn't fit to the requirements.
+
+As a result, **reshadow** created to solve these problems, in components era.
+It is possible to write HTML and CSS, but for Virtual DOM, like there is nothing else than just the Component.
+
+<Editor filename={__filename}>{{
+    files: {
+        './styles.css': `
+
+            button {
+                font-size: 16px;
+                cursor: pointer;
+                padding: 10px 15px;
+                border-radius: 20px;
+                border: 2px solid;
+                color: rebeccapurple;
+            }
+
+            button[disabled] {
+                cursor: not-allowed;
+                opacity: .4;
+
+                & content {
+                    pointer-events: none;
+                }
+            }
+        `
+    },
+    code: [
+        `
+            import styles from './styles.css'
+
+            const Button = ({bgcolor, children, ...props}) => styled(styles)(
+                <button {...props}>
+                    <content>{children}</content>
+                </button>
+            );
+        `,
+        `
+            <Button>
+                click me
+            </Button>
+        `,
+    ]
+}}
+</Editor>
+
+## elements
+
+## props and modifiers
+
+## `as` prop

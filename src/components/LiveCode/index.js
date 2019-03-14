@@ -8,7 +8,7 @@ const CodeEditor = React.lazy(() =>
 );
 
 const LiveCode = props => (
-    <LazyLoad height={200} offset={100} once>
+    <LazyLoad height={200} offset={300} once>
         <Suspense fallback={<div>Loading...</div>}>
             <CodeEditor {...props} />
         </Suspense>
