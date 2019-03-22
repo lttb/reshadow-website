@@ -7,7 +7,8 @@
         "analyze": "source-map-explorer 'dist/static/js/*.js'",
         "dev": "docz dev",
         "build": "docz build",
-        "now-build": "yarn build"
+        "now-build": "yarn build",
+        "test:flow": "flow"
     },
     "repository": {
         "type": "git",
@@ -45,6 +46,7 @@
         "eslint-plugin-promise": "^4.0.1",
         "eslint-plugin-react": "^7.12.4",
         "eslint-plugin-standard": "^4.0.0",
+        "flow-bin": "^0.95.1",
         "postcss-import-sync2": "^1.1.0",
         "postcss-nesting": "^7.0.0",
         "prettier": "^1.16.0",
