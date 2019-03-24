@@ -5,9 +5,11 @@ route: /setup
 
 # Setup
 
+In order to start using `reshadow` you only need `Babel` which you most likely already use(for transpiling `JSX` syntax or your code for older browsers). You can also delegate styles processing to `PostCSS`. And extract them into separate files with the provided webpack loader. Please read below.
+
 ## Macro
 
-With [CRA 2](https://github.com/facebook/create-react-app) (Create React App) or [babel-plugin-macros](https://github.com/kentcdodds/babel-plugin-macros) usage you can just use `reshadow/macro` out of the box.
+If you use [CRA 2](https://github.com/facebook/create-react-app) (Create React App) or [babel-plugin-macros](https://github.com/kentcdodds/babel-plugin-macros). You can use `reshadow/macro` and it will work out of the box.
 
 ```js
 import React from 'react';
@@ -30,7 +32,7 @@ Options (via [babel-plugin-macros config](https://github.com/kentcdodds/babel-pl
 
 ## Babel
 
-Add `reshadow/babel` to the plugin list.
+Babel is a bare minimum to start using `reshadow`. Add `reshadow/babel` to the plugin list. Now your styles will be handled by babel. They will end up in your javascript bundle and will be appended to the `<head>` tag of your html page when loaded.
 
 `babel.config.js`
 
@@ -50,7 +52,7 @@ module.exports = {
 
 ## PostCSS
 
-Add `reshadow/postcss` to the plugin list.
+If you want to delegate styles processing to [`PostCSS`](https://github.com/postcss/postcss) to take advantage of many things such as [`autoprefixer`](https://github.com/postcss/autoprefixer) you need to add `reshadow/postcss` to the `PostCSS` plugin list.
 
 `postcss.config.js`
 
@@ -62,7 +64,7 @@ module.exports = {
 
 ## Webpack
 
-Use `reshadow/webpack/loader` to extract styles in separate files.
+To extract styles into separate CSS files you need to add the `reshadow` webpack loader - `reshadow/webpack/loader`.
 
 _webpack.config.js_
 
