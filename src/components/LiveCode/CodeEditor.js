@@ -7,8 +7,7 @@ import transformModles from '@babel/plugin-transform-modules-commonjs';
 
 import styled from 'reshadow';
 
-import {codeBlock} from 'common-tags';
-import {Editor} from 'react-live';
+import Editor from './Editor';
 
 import './prismTemplateString';
 
@@ -41,6 +40,7 @@ class ErrorBoundary extends React.Component {
     }
 
     componentDidCatch(error, info) {
+        console.error('Error was catched inside the component', error, info);
         // Display fallback UI
         this.setState({hasError: true});
     }
@@ -70,7 +70,7 @@ const CodeEditor = ({children, filename, maxHeight = '200px'}) => {
     const polished = require('polished');
     const resolve = require('resolve');
 
-    const [state, setState] = React.useState(children.code);
+    const [scripts, setScripts] = React.useState(children.code);
     const ref = React.useRef({});
 
     if (!ref.current.hash) {
@@ -82,7 +82,7 @@ const CodeEditor = ({children, filename, maxHeight = '200px'}) => {
     const transpile = data => {
         if (children.files) {
             resolve.sync = file => file;
-            fs.readFileSync = file => files[file];
+            fs.readFileSync = path => files[path];
         }
 
         let res = null;
@@ -104,7 +104,9 @@ const CodeEditor = ({children, filename, maxHeight = '200px'}) => {
     let element = null;
 
     try {
-        element = eval(transpile(state.join('\n')));
+        // We definitely need to do `eval` here
+        // eslint-disable-next-line no-eval
+        element = eval(transpile(scripts.join('\n')));
     } catch (e) {
         console.error(e);
     }
@@ -133,29 +135,6 @@ const CodeEditor = ({children, filename, maxHeight = '200px'}) => {
             }
         }
 
-        part {
-            max-height: ${maxHeight};
-            overflow: scroll;
-            background: #f6f8fa;
-            padding: 5px 10px;
-            box-shadow: inset 0px 0px 10px -9px;
-
-            & + part {
-                margin-top: 10px;
-            }
-
-            & filename {
-                font-weight: bold;
-                padding: 0;
-                float: right;
-                font-size: 13px;
-                color: #29687d;
-                position: sticky;
-                top: 0;
-                right: 10px;
-            }
-        }
-
         preview {
             flex: 1;
             display: flex;
@@ -167,38 +146,36 @@ const CodeEditor = ({children, filename, maxHeight = '200px'}) => {
     `(
         <root>
             <editor>
-                {Object.keys(files).map(key => (
-                    <part key={key}>
-                        <filename>{key}</filename>
-                        <Editor
-                            language="scss"
-                            theme={undefined}
-                            code={codeBlock(files[key])}
-                            onChange={code => {
-                                files[key] = code;
+                {Object.keys(files).map(path => (
+                    <Editor
+                        key={path}
+                        language="scss"
+                        path={path}
+                        file={files[path]}
+                        maxHeight={maxHeight}
+                        onChange={freshFile => {
+                            files[path] = freshFile;
 
-                                setState(st => [...st]);
-                            }}
-                        />
-                    </part>
+                            setScripts(scripts => [...scripts]); // Triggers rerender
+                        }}
+                    />
                 ))}
-                {state.map(
-                    (x, i) =>
-                        !(parts[i] && parts[i].hidden) && (
-                            <part key={i}>
-                                <Editor
-                                    language="jsx"
-                                    theme={undefined}
-                                    code={codeBlock(x)}
-                                    onChange={code =>
-                                        setState(st =>
-                                            Object.assign([...st], {
-                                                [i]: code,
-                                            }),
-                                        )
-                                    }
-                                />
-                            </part>
+                {scripts.map(
+                    (script, scriptIndex) =>
+                        !(parts[scriptIndex] && parts[scriptIndex].hidden) && (
+                            <Editor
+                                key={scriptIndex}
+                                language="jsx"
+                                file={script}
+                                maxHeight={maxHeight}
+                                onChange={freshScript =>
+                                    setScripts(oldScripts =>
+                                        Object.assign([...oldScripts], {
+                                            [scriptIndex]: freshScript,
+                                        }),
+                                    )
+                                }
+                            />
                         ),
                 )}
             </editor>
