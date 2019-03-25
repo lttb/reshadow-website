@@ -18,8 +18,12 @@ module.exports = {
     env: {
         es6: true,
     },
-    overrides: [
-        {
+    settings: {
+        react: {
+            version: 'detect',
+        },
+    },
+    overrides: [{
             files: ['**/spec/*.js'],
             env: {
                 jest: true,
@@ -37,5 +41,9 @@ module.exports = {
     ],
     rules: {
         'no-sequences': 'off',
+
+        "react/prop-types": ['error', {
+            skipUndeclared: true,
+        }],
     },
 };

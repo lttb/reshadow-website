@@ -41,9 +41,11 @@ export default class Editor extends Component<Props> {
                     position: sticky;
                     top: 0;
                     right: 10px;
-                }}
+                }
+            }
         `(
             <root>
+                {' '}
                 {path && <path>{path}</path>}
                 <BaseEditor
                     language={language}

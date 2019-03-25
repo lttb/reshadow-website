@@ -25,10 +25,22 @@ const defaultOptions = {
     root: __dirname,
     filename: __filename,
     presets: [
-        ['@babel/preset-react', {throwIfNamespace: false, useBuiltIns: true}],
+        [
+            '@babel/preset-react',
+            {
+                throwIfNamespace: false,
+                useBuiltIns: true,
+            },
+        ],
     ],
     plugins: [
-        ['reshadow/babel', {postcss: true, files: /\.css$/}],
+        [
+            'reshadow/babel',
+            {
+                postcss: true,
+                files: /\.css$/,
+            },
+        ],
         '@babel/plugin-transform-modules-commonjs',
     ],
 };
@@ -67,7 +79,6 @@ window.require = function(module) {
 
 const CodeEditor = ({children, filename, maxHeight = '200px'}) => {
     const React = require('react');
-    const polished = require('polished');
     const resolve = require('resolve');
 
     const [scripts, setScripts] = React.useState(children.code);

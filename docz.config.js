@@ -4,9 +4,9 @@ const {css} = require('docz-plugin-css');
 module.exports = {
     title: 'reshadow ⛱️',
     description: 'reshadow documentation',
+    src: './src',
+    files: 'pages/**/*.mdx',
     dest: '/dist',
-    hashRouter: true,
-    // debug: true,
     repository: 'https://github.com/lttb/reshadow',
     editBranch: 'master',
     themeConfig: {
@@ -44,16 +44,43 @@ module.exports = {
         }),
     ],
     modifyBundlerConfig(config, dev) {
+        config.plugins.push(
+            new webpack.IgnorePlugin({
+                resourceRegExp: /^module$/,
+            }),
+
+            new webpack.NormalModuleReplacementPlugin(
+                /^buble/,
+                require.resolve('./configs/stubs/buble.js'),
+            ),
+
+            new webpack.NormalModuleReplacementPlugin(
+                /(^postcss-preset-env)|(^cssnano)/,
+                require.resolve('./configs/stubs/postcss-plugin.js'),
+            ),
+        );
+
+        config.module.rules.push({
+            test: /\.mjs$/,
+            type: 'javascript/auto',
+        });
+
         if (!dev) {
             const utilsIndex = config.entry.app.findIndex(x =>
                 x.endsWith('react-dev-utils/webpackHotDevClient.js'),
             );
             config.entry.app.splice(utilsIndex, 1);
 
-            config.optimization.splitChunks = {chunks: 'all'};
+            config.optimization.splitChunks = {
+                chunks: 'all',
+            };
             config.plugins.push(
-                new webpack.IgnorePlugin({resourceRegExp: /react-dev-utils/}),
-                new webpack.IgnorePlugin({resourceRegExp: /sockjs-client/}),
+                new webpack.IgnorePlugin({
+                    resourceRegExp: /react-dev-utils/,
+                }),
+                new webpack.IgnorePlugin({
+                    resourceRegExp: /sockjs-client/,
+                }),
                 new webpack.IgnorePlugin({
                     resourceRegExp: /react-error-overlay/,
                 }),
@@ -65,10 +92,6 @@ module.exports = {
                 //     /^react-codemirror2/,
                 //     require.resolve('./configs/stub.js'),
                 // ),
-                new webpack.NormalModuleReplacementPlugin(
-                    /^buble/,
-                    require.resolve('./configs/stub.js'),
-                ),
             );
         }
 

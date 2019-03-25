@@ -25,13 +25,16 @@
         "@babel/standalone": "^7.3.4",
         "babel-plugin-prismjs": "^1.0.2",
         "common-tags": "^1.8.0",
-        "docz": "^0.13.7",
-        "docz-plugin-css": "^0.11.0",
-        "docz-theme-default": "^0.13.7",
+        "docz": "0.13.7",
+        "docz-core": "0.13.7",
+        "docz-plugin-css": "0.11.0",
+        "docz-theme-default": "0.13.7",
         "polished": "^3.0.3",
         "prismjs": "^1.15.0",
+        "react": "^16.8.3",
+        "react-dom": "^16.8.3",
         "react-lazyload": "^2.5.0",
-        "reshadow": "^0.0.1-30"
+        "reshadow": "0.0.1-alpha.3"
     },
     "devDependencies": {
         "babel-eslint": "^10.0.1",
@@ -47,12 +50,12 @@
         "eslint-plugin-react": "^7.12.4",
         "eslint-plugin-standard": "^4.0.0",
         "flow-bin": "^0.95.1",
-        "postcss-import-sync2": "^1.1.0",
-        "postcss-nesting": "^7.0.0",
         "prettier": "^1.16.0",
-        "react": "^16.8.3",
-        "react-dom": "^16.8.3",
         "react-hot-loader": "^4.8.0",
-        "source-map-explorer": "^1.7.0"
+        "source-map-explorer": "^1.7.0",
+        "webpack": "4.28.4"
+    },
+    "resolutions": {
+        "ansi-styles": "^3.2.0"
     }
 }

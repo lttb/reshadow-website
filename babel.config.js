@@ -1,6 +1,11 @@
 module.exports = {
     plugins: [
-        [require.resolve('reshadow/babel'), {postcss: true}],
+        [
+            'reshadow/babel',
+            {
+                postcss: true,
+            },
+        ],
         [
             'module-resolver',
             {
