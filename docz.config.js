@@ -55,15 +55,16 @@ module.exports = {
             ),
 
             new webpack.NormalModuleReplacementPlugin(
-                /(^postcss-preset-env)|(^cssnano)/,
+                /(^cssnano)/,
                 require.resolve('./configs/stubs/postcss-plugin.js'),
             ),
         );
 
-        config.module.rules.push({
-            test: /\.mjs$/,
-            type: 'javascript/auto',
-        });
+        /* resolve only browser and main fields */
+        config.resolve.mainFields = ['browser', 'main'];
+
+        /* ignore context warnings */
+        config.module.exprContextCritical = false;
 
         if (!dev) {
             const utilsIndex = config.entry.app.findIndex(x =>

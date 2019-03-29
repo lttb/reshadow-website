@@ -10557,10 +10557,10 @@ reselect@^3.0.1:
   resolved "https://registry.yarnpkg.com/reselect/-/reselect-3.0.1.tgz#efdaa98ea7451324d092b2b2163a6a1d7a9a2147"
   integrity sha1-79qpjqdFEyTQkrKyFjpqHXqaIUc=
 
-reshadow@0.0.1-alpha.3:
-  version "0.0.1-alpha.3"
-  resolved "https://registry.yarnpkg.com/reshadow/-/reshadow-0.0.1-alpha.3.tgz#2e6f606d53804b755ada8c6dd1ce628d5ffb18ac"
-  integrity sha512-/sQ5C3QaJnNpRDefTihx7qDq1vfeEgh4BWQIfmj9AkVnMXbVWXC6r+LZMU1ktDShvxTG48yFGjK+5u0SiscE0w==
+reshadow@0.0.1-alpha.5:
+  version "0.0.1-alpha.5"
+  resolved "https://registry.yarnpkg.com/reshadow/-/reshadow-0.0.1-alpha.5.tgz#c7f27172e51099b7c0c467ea9b07c399b732f0d1"
+  integrity sha512-hxi99Dlvq2BKmHQuYs2FrEe70VpNl86DSLBgIS3On/Muel7b6/VN6VKVXzhNAdt0sjXJvAwEyW2GbONPY0PGzQ==
   dependencies:
     "@babel/helper-module-imports" "^7.0.0"
     "@babel/plugin-syntax-jsx" "^7.2.0"

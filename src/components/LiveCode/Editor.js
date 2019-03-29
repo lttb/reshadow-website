@@ -45,7 +45,6 @@ export default class Editor extends Component<Props> {
             }
         `(
             <root>
-                {' '}
                 {path && <path>{path}</path>}
                 <BaseEditor
                     language={language}
