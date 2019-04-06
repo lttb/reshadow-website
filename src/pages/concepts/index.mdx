@@ -5,6 +5,33 @@ route: /concepts
 
 # Main Concepts
 
+**reshadow** has two basic concepts: *elements* and *modifiers*. It looks similar to the **BEM**, and yes, it is. But let's take a break from **BEM** and get to the bottom of it.
+
+Take a look on this example:
+
+```css
+button[disabled] {
+    pointer-events: none;
+    opacity: .4;
+}
+```
+```js
+<button disabled>click me</button>
+```
+
+The state of the application here presented by the **element** `button` and the button's state, described by **modifier** `disabled`. So yeah, we can describe the web application presentation in terms of elements and modifiers:
+- element - `HTML` element
+- modifier - element attributes
+
+And you can easily match styles to this state, just by matching on the element and its modifier, like in the example above.
+
+There are no conventions and abstractions, it's just how `HTML` and `CSS` works. With **reshadow**, we have an intention to build complex UIs, based on basic ideas and strong specification, which exists more than a dozen years.
+
+So, back to BEM, in terms of **reshadow** it could be presented by:
+- **B**lock - Component
+- **E**lement - Component's presentational elements (mark up)
+- **M**odifiers - Component's props and its' elements attributes
+
 ## elements
 
 ## props and modifiers
