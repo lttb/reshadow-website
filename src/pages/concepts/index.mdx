@@ -18,18 +18,18 @@ button[disabled] {
 <button disabled>click me</button>
 ```
 
-The state of the application here presented by the **element** `button` and the button's state, described by **modifier** `disabled`. So yeah, we can describe the web application presentation in terms of elements and modifiers:
-- element - `HTML` element
-- modifier - element attributes
+Application's state here was presented by the `button` **element**'s state using `disabled` **modifier**. So yeah, we can describe the web application presentation in terms of elements and modifiers:
+- element - `HTML` element,
+- modifier - element attributes.
 
-And you can easily match styles to this state, just by matching on the element and its modifier, like in the example above.
+And you can easily match styles to the application's state, just by writing CSS selectors on the element and its modifiers, like in the example above.
 
-There are no conventions and abstractions, it's just how `HTML` and `CSS` works. With **reshadow**, we have an intention to build complex UIs, based on basic ideas and strong specification, which exists more than a dozen years.
+There are no additional conventions and abstractions, it's just the way `HTML` and `CSS` works. With **reshadow**, we have an intention to build complex UIs, based on basic ideas and strong specification, which exists more than a dozen years.
 
 So, back to BEM, in terms of **reshadow** it could be presented by:
-- **B**lock - Component
-- **E**lement - Component's presentational elements (mark up)
-- **M**odifiers - Component's props and its' elements attributes
+- **B**lock - Component,
+- **E**lement - Component's presentational elements (mark up),
+- **M**odifiers - Component's props and its' elements attributes.
 
 ## elements
 
