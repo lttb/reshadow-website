@@ -36,7 +36,7 @@
         "react-dom": "^16.8.3",
         "react-lazyload": "^2.5.0",
         "react-live": "2.0.0",
-        "reshadow": "0.0.1-alpha.5"
+        "reshadow": "0.0.1-alpha.7"
     },
     "devDependencies": {
         "babel-eslint": "^10.0.1",
@@ -58,6 +58,6 @@
     },
     "resolutions": {
         "ansi-styles": "^3.2.0",
-        "@babel/core": "7.4.3"
+        "@babel/core": "^7.4.0"
     }
 }

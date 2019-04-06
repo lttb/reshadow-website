@@ -5,8 +5,6 @@ title: reshadow ⛱️
 description: Write semantic mark up and styles, as the soul wants.
 ---
 
-import styled from 'reshadow';
-
 import Editor from '@/components/LiveCode';
 
 **reshadow** provides the Shadow DOM developer experience, but for the Virtual DOM with the Component way.
@@ -45,6 +43,10 @@ Please check the [Motivation](/motivation) page to get more information.
 
 ## Basics
 
+```js
+import styled from 'reshadow';
+```
+
 Let's start with a simple `Button` component.
 
 <Editor filename={__filename}>{{
@@ -77,10 +79,86 @@ Let's start with a simple `Button` component.
         </Button>
     `,
     ],
+
 }}
+
 </Editor>
 
 Note that with `styled(styles)` you can apply styles to the Virtual DOM. In addition, you can apply to the `styled` function any number of arguments, like `styled(styles1, styles2, ...)`, so the `styled` function will compose all of them together.
+
+The same approach available also with `css-in-js` function `css`:
+
+<Editor filename={__filename}>{{
+    code: [
+        `
+        import {css} from 'reshadow'\n
+
+        const styles = css\`
+            button {
+                font-size: 16px;
+                cursor: pointer;
+                padding: 10px 15px;
+                border-radius: 20px;
+                border: 2px solid;
+                background-color: white;
+                color: darkorange;
+            }
+        \`
+
+        const Button = ({children, ...props}) => styled(styles)(
+            <button {...props}>
+                {children}
+            </button>,
+        );
+        `,
+        `
+        <Button>
+            Simple Button
+        </Button>
+    `,
+    ],
+
+}}
+
+</Editor>
+
+And the same with the `styled` function:
+
+<Editor filename={__filename}>
+    {{
+        code: [
+            `
+        const Button = ({children, ...props}) => styled\`
+            button {
+                font-size: 16px;
+                cursor: pointer;
+                padding: 10px 15px;
+                border-radius: 20px;
+                border: 2px solid;
+                background-color: white;
+                color: limegreen;
+            }
+        \`(
+            <button {...props}>
+                {children}
+            </button>,
+        );
+        `,
+            `
+        <Button>
+            Simple Button
+        </Button>
+    `,
+        ],
+    }}
+</Editor>
+
+Cool! You can also notice here that **reshadow** allows you to use `css-in-js` approaches with [template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals).
+Important notice here is that all styles were processed during the building, so **there is no runtime styles processing**.
+
+You can combine `css-modules` and `css-in-js` approaches like you or your team want.
+
+### Runtime Styles
 
 Okay, so let's add some runtime to the `Button` styles to make our `Button` more interactive.
 
@@ -124,13 +202,12 @@ Okay, so let's add some runtime to the `Button` styles to make our `Button` more
         </Button>
     `,
     ],
+
 }}
+
 </Editor>
 
-Cool! You can also notice here that **reshadow** allows you to use `css-in-js` approaches with [template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals).
-Important notice here is that all styles were processed during the building, so **there is no runtime styles processing**.
-
-You can combine `css-modules` and `css-in-js` approaches like you or your team want.
+### Attributes Matching
 
 And now, for the `Button` we might also want to add some styles for the `disabled` state. For that we can match selector on the `disabled` **prop** (it's not the DOM attribute, ie it will be transpiled into a class name):
 
@@ -182,7 +259,9 @@ And now, for the `Button` we might also want to add some styles for the `disable
             </Button>
         `,
     ]
+
 }}
+
 </Editor>
 
 We can also add some `sizes` to the `Button`. **reshadow** allows to use namespaces for the custom elements' `modifiers`, which will not be passed the `DOM` nodes. For example, you can add `use:size` attribute and match on the `[use|size]` or `[|size]`(syntax sugar) selector in styles.
@@ -240,7 +319,9 @@ We can also add some `sizes` to the `Button`. **reshadow** allows to use namespa
             </Button>
         `,
     ]
+
 }}
+
 </Editor>
 
 And it is also possible to match styles on the Components.
@@ -260,7 +341,7 @@ And it is also possible to match styles on the Components.
                 button {
                     cursor: pointer;
                     border: 2px solid \${bgcolor};
-                    background-color: \${rgba(bgcolor, 0.7)};
+                    background-color: \${rgba(bgcolor, 0.3)};
                     color: \${readableColor(bgcolor)};
                     transition: background-color .5s;\n
                     &:hover:not([disabled]) {
@@ -313,7 +394,9 @@ And it is also possible to match styles on the Components.
             )
         `,
     ]
+
 }}
+
 </Editor>
 
 Please check the [advanced](/usage/advanced) docs to get more details about the **reshadow**.

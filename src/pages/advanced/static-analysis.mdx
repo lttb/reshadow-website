@@ -2,4 +2,84 @@
 name: static analysis
 menu: advanced
 route: /advanced/static-analysis
+title: Static Styles Analysis
 ---
+
+import Editor from '@/components/LiveCode';
+
+<Editor direction="column" filename={__filename} options={{
+    reshadow: {
+        postcss: {
+            options: {
+                reshadow: {
+                    stats: true,
+                },
+            },
+        },
+    },
+}}>{{
+    files: {
+        './styles.css': `
+            [type="submit"] { /* styles */ }\n
+
+            button {
+                &[disabled] { /* styles */ }
+
+                &[type="submit"] { /* styles */ }
+                &[type="reset"] { /* styles */ }
+
+                &[use|size=s] { /* styles */ }
+                &[use|size=m] { /* styles */ }
+            }
+
+            content { /* styles */ }
+        `
+    },
+    code: [
+        `
+            import styles from './styles.css'
+
+            const elements = JSON.parse(styles.__elements__.slice(1, -1));
+
+            const mapValues = values => Object.keys(values).map(key => (
+                <div key={key}><b>{key}</b>: <i>{values[key].join(' | ') || 'boolean'}</i></div>
+            ))
+
+            styled\`
+                table {
+                    width: 100%;
+                }
+
+                tr:nth-child(2n) {
+                    background-color: mistyrose ;
+                }
+
+                td {
+                    padding: 10px;
+                }
+            \`(
+                <table>
+                    <thead>
+                        <tr>
+                            <th>element</th>
+                            <th>props</th>
+                            <th>modifiers</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {Object.keys(elements).map(key => (
+                            <tr key={key}>
+                                <td>{key === '__common__' ? null : key}</td>
+                                <td>{mapValues(elements[key].props)}</td>
+                                <td>{mapValues(elements[key].mods)}</td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            )
+        `,
+    ]
+
+}}
+
+</Editor>

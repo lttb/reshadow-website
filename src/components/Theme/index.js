@@ -96,20 +96,13 @@ const Page = ({children, ...props}) => {
             }
         }
     `(
-        components.page({
-            ...props,
-            children: (
-                <>
-                    <header>
-                        <h1>{doc.title}</h1>
-                        {doc.description && (
-                            <desc as="p">{doc.description}</desc>
-                        )}
-                    </header>
-                    <article>{children}</article>
-                </>
-            ),
-        }),
+        <components.page {...props}>
+            <header>
+                <h1>{doc.title}</h1>
+                {doc.description && <desc as="p">{doc.description}</desc>}
+            </header>
+            <article>{children}</article>
+        </components.page>,
     );
 };
 

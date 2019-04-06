@@ -2,4 +2,72 @@
 name: override
 menu: advanced
 route: /advanced/override
+title: Override
 ---
+
+import Editor from '@/components/LiveCode';
+
+<Editor filename={__filename}>{{
+    code: [
+        `
+            import {css} from 'reshadow'\n
+
+            const Button = ({children, styles, ...props}) => styled(styles)(
+                <button {...props}>
+                    <content as="span">{children}</content>
+                </button>
+            );
+
+            Button.defaultProps = {
+                styles: css\`
+                    button {
+                        background-color: white;
+                        color: steelblue;
+                        border-radius: 20px;
+                        border: 2px solid;
+                        font-size: 16px;
+                        cursor: pointer;
+                        padding: 8px 16px;
+                    }
+                \`
+            };
+        `,
+        `
+            styled\`
+                Button + Button {
+                    margin-left: 15px;
+                }
+            \`(
+                <>
+                    <Button>
+                        Default Styles
+                    </Button>
+
+                    <Button disabled styles={css\`
+                        button {
+                            background-color: orchid;
+                            color: white;
+                            padding: 8px 16px;
+                            border: 2px solid plum;
+                            border-radius: 4px;
+                        }
+
+                        button[disabled] {
+                            opacity: .5;
+                        }
+
+                        content {
+                            font-size: 16px;
+                        }
+                    \`}>
+                        Overridden
+                    </Button>
+                </>
+            )
+
+        `,
+    ]
+
+}}
+
+</Editor>
