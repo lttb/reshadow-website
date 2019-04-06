@@ -130,6 +130,7 @@ const CodeEditor = ({children, filename, maxHeight = '350px'}) => {
             border: 4px solid #f0f4f6;
             border-radius: 10px;
             flex-wrap: wrap;
+            margin: 28px 0;
         }
 
         editor {

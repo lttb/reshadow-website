@@ -13,6 +13,7 @@ module.exports = {
         colors: {
             primary: '#097aa0',
             background: '#fafafa',
+            link: '#008ebd',
             text: '#1D2330',
             sidebarBg: '#fffffff0',
             sidebarText: '#222',
@@ -38,7 +39,7 @@ module.exports = {
             container: css`
                 background: #fafafa;
                 min-height: 100%;
-                border: 2px solid #087aa0;
+                border: 3px solid #087aa0;
                 box-shadow: 0px 0px 10px -5px white;
 
                 @media (min-width: 1024px) {
@@ -72,13 +73,26 @@ module.exports = {
             ul: css`
                 padding: 0;
 
+                & li::before {
+                    content: '●';
+                    font-size: 0.6em;
+                    margin-right: 10px;
+                    vertical-align: middle;
+                    display: inline-block;
+                    margin-bottom: 3px;
+                }
+
                 & & li::before {
                     content: '○ ';
                 }
             `,
+            h1: css`
+                font-size: 52px !important;
+                margin: 12px 0;
+            `,
         },
     },
-    menu: ['reshadow', 'getting started', 'usage', 'setup', 'linting'],
+    menu: ['reshadow', 'usage', 'advanced', 'setup'],
     plugins: [
         cssPlugin({
             preprocessor: 'postcss',
@@ -86,9 +100,9 @@ module.exports = {
     ],
     modifyBundlerConfig(config, dev) {
         config.plugins.push(
-            // new webpack.IgnorePlugin({
-            //     resourceRegExp: /^module$/,
-            // }),
+            new webpack.IgnorePlugin({
+                resourceRegExp: /^module$/,
+            }),
 
             new webpack.NormalModuleReplacementPlugin(
                 /^buble/,
@@ -101,13 +115,6 @@ module.exports = {
             ),
         );
 
-        // config.module.rules.push({
-        //     test: /\.js$/,
-        //     type: 'javascript/auto',
-        // });
-
-        console.log(config.module.rules);
-
         /* resolve only browser and main fields */
         config.resolve.mainFields = ['browser', 'main'];
 
@@ -115,11 +122,6 @@ module.exports = {
         config.module.exprContextCritical = false;
 
         if (!dev) {
-            const utilsIndex = config.entry.app.findIndex(x =>
-                x.endsWith('react-dev-utils/webpackHotDevClient.js'),
-            );
-            config.entry.app.splice(utilsIndex, 1);
-
             config.optimization.splitChunks = {
                 chunks: 'all',
             };

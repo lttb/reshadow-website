@@ -14,8 +14,6 @@ type Props = {
     onChange: () => void,
 };
 
-console.log(Prism);
-
 export default class Editor extends Component<Props> {
     shouldComponentUpdate(nextProps: Props) {
         return this.props.file !== nextProps.file;
@@ -25,7 +23,7 @@ export default class Editor extends Component<Props> {
         const {file, language, maxHeight, path, onChange} = this.props;
         return styled`
             :global(.token.operator) {
-                background: none;
+                background: none !important;
             }
 
             root {
