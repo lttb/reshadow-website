@@ -9,6 +9,7 @@ module.exports = {
     dest: '/dist',
     repository: 'https://github.com/lttb/reshadow',
     editBranch: 'master',
+    theme: require.resolve('./src/components/Theme'),
     themeConfig: {
         colors: {
             primary: '#097aa0',
@@ -19,15 +20,6 @@ module.exports = {
             sidebarText: '#222',
         },
         styles: {
-            body: css`
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
-                    Helvetica, Arial, sans-serif, 'Apple Color Emoji',
-                    'Segoe UI Emoji', 'Segoe UI Symbol';
-                font-size: 18px !important;
-                line-height: 1.6;
-                font-style: normal;
-                -webkit-font-smoothing: subpixel-antialiased;
-            `,
             code: css`
                 border: 1px solid rgba(0, 0, 0, 0.02);
                 font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo,
@@ -38,10 +30,7 @@ module.exports = {
                 font-family: 'Fira code', 'Fira Mono', monospace;
             `,
             container: css`
-                background: #fafafa;
-                min-height: 100%;
-                border: 3px solid #087aa0;
-                box-shadow: 0px 0px 10px -5px white;
+                padding: 0 !important;
 
                 @media (min-width: 1024px) {
                     width: 1024px;

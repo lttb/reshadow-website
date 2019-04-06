@@ -1,11 +1,10 @@
 ---
 name: motivation
 route: /motivation
+title: Motivation
 ---
 
 import Editor from '@/components/LiveCode';
-
-# Motivation
 
 The idea of **reshadow** came from the needs to develop the Design System, which includes the implementation of a lot of complex components, with different states, styles, experiments and themes.
 The main purpose of **reshadow** creation was an attempt to simplify the way how to style such complex components and systems.
@@ -38,7 +37,7 @@ button[disabled] {
 But, of course nowadays we have some troubles with global styles, and we need to use abstractions like `BEM`, `css-modules` and so on.
 We also have `Shadow DOM`, which can fix some kind of that problems like styles isolation, but there are also some tradeoffs, and it often doesn't fit to the requirements.
 
-As a result, **reshadow** created to solve these problems, in components era.
+As a result, **reshadow** was created to solve these problems, in components era.
 It is possible to write HTML and CSS, but for Virtual DOM, like there is nothing else than just the Component.
 
 <Editor filename={__filename}>{{
@@ -52,6 +51,7 @@ It is possible to write HTML and CSS, but for Virtual DOM, like there is nothing
                 border-radius: 20px;
                 border: 2px solid;
                 color: rebeccapurple;
+                background: white;
             }
 
             button[disabled] {
