@@ -21,7 +21,7 @@ registerPlugin('reshadow/babel', reshadowBabel);
 registerPlugin('@babel/plugin-transform-modules-commonjs', transformModles);
 registerPreset('@babel/preset-react', presetReact);
 
-const defaultOptions = {
+const getOptions = options => ({
     root: __dirname,
     filename: __filename,
     presets: [
@@ -39,11 +39,12 @@ const defaultOptions = {
             {
                 postcss: true,
                 files: /\.css$/,
+                ...options.reshadow,
             },
         ],
         '@babel/plugin-transform-modules-commonjs',
     ],
-};
+});
 
 class ErrorBoundary extends React.Component {
     constructor(props) {
@@ -77,7 +78,13 @@ window.require = function(module) {
     }
 };
 
-const CodeEditor = ({children, filename, maxHeight = '200px'}) => {
+const CodeEditor = ({
+    children,
+    direction,
+    filename,
+    maxHeight = '350px',
+    options,
+}) => {
     const React = require('react');
     const resolve = require('resolve');
 
@@ -100,7 +107,7 @@ const CodeEditor = ({children, filename, maxHeight = '200px'}) => {
 
         try {
             const {code} = transform(`import styled from 'reshadow';` + data, {
-                ...defaultOptions,
+                ...getOptions(options),
                 filename: filename + ref.current.hash,
             });
 
@@ -130,6 +137,11 @@ const CodeEditor = ({children, filename, maxHeight = '200px'}) => {
             border: 4px solid #f0f4f6;
             border-radius: 10px;
             flex-wrap: wrap;
+            margin: 28px 0;
+
+            &[|direction='column'] {
+                flex-direction: column;
+            }
         }
 
         editor {
@@ -155,7 +167,7 @@ const CodeEditor = ({children, filename, maxHeight = '200px'}) => {
             padding: 25px 30px;
         }
     `(
-        <root>
+        <root use:direction={direction}>
             <editor>
                 {Object.keys(files).map(path => (
                     <Editor

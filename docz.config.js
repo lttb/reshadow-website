@@ -1,45 +1,107 @@
 const webpack = require('webpack');
-const {css} = require('docz-plugin-css');
+const {css: cssPlugin} = require('docz-plugin-css');
+const {css} = require('styled-components');
 
 module.exports = {
     title: 'reshadow ⛱️',
     description: 'reshadow documentation',
-    src: './src',
-    files: 'pages/**/*.mdx',
+    files: './src/pages/**/*.mdx',
     dest: '/dist',
     repository: 'https://github.com/lttb/reshadow',
     editBranch: 'master',
+    theme: require.resolve('./src/components/Theme'),
     themeConfig: {
         colors: {
-            primary: '#1990b8',
+            primary: '#097aa0',
             background: '#fafafa',
+            link: '#008ebd',
             text: '#1D2330',
-            sidebarBg: '#fff',
+            sidebarBg: '#fffffff0',
             sidebarText: '#222',
         },
         styles: {
-            sidebar: {
-                boxShadow: '0px 0px 10px -5px',
-            },
-            playground: {
-                background: '#fafafa',
-            },
-            ul: {
-                '& &': {
-                    marginLeft: 25,
+            code: css`
+                border: 1px solid rgba(0, 0, 0, 0.02);
+                font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo,
+                    Courier, monospace;
+            `,
+            pre: css`
+                font-size: 14px !important;
+                font-family: 'Fira code', 'Fira Mono', monospace;
+            `,
+            container: css`
+                padding: 0 !important;
 
-                    '& li': {
-                        '&::before': {
-                            content: '"○ "',
-                        },
-                    },
-                },
-            },
+                @media (min-width: 1024px) {
+                    width: 1024px;
+                }
+
+                & > a {
+                    border-radius: 12px;
+                    background: white;
+
+                    @media (min-width: 920px) {
+                        right: 80px;
+                    }
+                }
+            `,
+            sidebar: css`
+                box-shadow: 0px 0px 10px -5px;
+
+                /* a trick to set background for the page */
+                & ~ div {
+                    min-height: 100vh;
+                    background-image: linear-gradient(
+                        to right top,
+                        #051937,
+                        #133f5f,
+                        #296986,
+                        #4996aa,
+                        #72c5cb
+                    );
+
+                    &:last-child {
+                        z-index: 1;
+                    }
+                }
+
+                /* hide main page */
+                & nav > div:first-child {
+                    display: none;
+                }
+
+                /* style the Hamburger */
+                & > div > button {
+                    background: none;
+                    top: 0;
+                    right: -40px;
+                }
+            `,
+            ul: css`
+                padding: 0;
+
+                & li::before {
+                    content: '●';
+                    font-size: 0.6em;
+                    margin-right: 10px;
+                    vertical-align: middle;
+                    display: inline-block;
+                    margin-bottom: 3px;
+                }
+
+                & & li::before {
+                    content: '○ ';
+                }
+            `,
+            h1: css`
+                font-size: 52px !important;
+                margin: 12px 0;
+            `,
         },
     },
-    menu: ['reshadow', 'getting started', 'usage', 'setup', 'linting'],
+    menu: ['reshadow', 'motivation', 'concepts', 'usage', 'advanced', 'setup'],
     plugins: [
-        css({
+        cssPlugin({
             preprocessor: 'postcss',
         }),
     ],
@@ -67,11 +129,6 @@ module.exports = {
         config.module.exprContextCritical = false;
 
         if (!dev) {
-            const utilsIndex = config.entry.app.findIndex(x =>
-                x.endsWith('react-dev-utils/webpackHotDevClient.js'),
-            );
-            config.entry.app.splice(utilsIndex, 1);
-
             config.optimization.splitChunks = {
                 chunks: 'all',
             };

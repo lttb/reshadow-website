@@ -1,0 +1,59 @@
+---
+name: composition
+menu: advanced
+route: /advanced/composition
+title: Composition
+---
+
+import Editor from '@/components/LiveCode';
+
+<Editor filename={__filename}>{{
+    code: [
+        `
+            import {css} from 'reshadow'\n
+
+            const colorStyles = css\`
+                button {
+                    background-color: white;
+                    color: steelblue;
+                }
+            \`
+
+            const borderStyles = css\`
+                button {
+                    border-radius: 20px;
+                    border: 2px solid;
+                }
+            \`
+
+            const fontStyles = css\`
+                button {
+                    font-size: 16px;
+                }
+            \`
+
+            const Button = ({children, ...props}) => styled(
+                colorStyles,
+                borderStyles,
+                fontStyles,
+            )\`
+                button {
+                    cursor: pointer;
+                    padding: 10px 15px;
+                }
+            \`(
+                <button {...props}>
+                    <content as="span">{children}</content>
+                </button>
+            );
+        `,
+        `
+            <Button>
+                click me
+            </Button>
+        `,
+    ]
+
+}}
+
+</Editor>

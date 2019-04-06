@@ -1,0 +1,201 @@
+---
+name: concepts
+route: /concepts
+title: Main Concepts
+---
+
+**reshadow** has two basic concepts: _elements_ and _modifiers_. It looks similar to the **BEM**, and yes, it is. But let's take a break from BEM and get to the bottom of it.
+
+Take a look at this example:
+
+```css
+button[disabled] {
+    pointer-events: none;
+    opacity: 0.4;
+}
+```
+
+```js
+<button disabled>click me</button>
+```
+
+Application's state here was presented by the `button` **element**'s state using `disabled` **modifier**. So yeah, we can describe the web application presentation in terms of elements and modifiers:
+
+-   element - `HTML` element,
+-   modifier - element attributes.
+
+And you can easily match styles to the application's state, just by writing CSS selectors on the element and its modifiers, like in the example above.
+
+There are no additional conventions and abstractions, it's just the way `HTML` and `CSS` works. With **reshadow**, we have an intention to build complex UIs, based on basic ideas and strong specification, which exists more than a dozen years.
+
+So, back to BEM, in terms of **reshadow** it could be presented by:
+
+-   **B**lock - Component,
+-   **E**lement - Component's presentational elements (mark up),
+-   **M**odifiers - Component's props and its elements' attributes.
+
+## elements
+
+Let's consider an abstract simplified part of mark up:
+
+```js
+<div className={styles.container}>
+    <div className={styles.tooltip}>
+        <div className={styles.content}>{this.props.children}</div>
+
+        <span className={styles.tail} />
+    </div>
+</div>
+```
+
+Leaving aside the issue of quality of that code, `a11y` problems and so on, there is also a problem to read and understand this code. It's not clear, what is the **semantic** mark up of this Component, how it was decomposed, how you can also style it on your own.
+
+In fact, this mark up is presented by these elements:
+
+-   container
+-   tooltip
+-   content
+-   tail
+
+It's important to note, that **elements** are not required to be necessary `HTML` elements. These elements are highlighted semantically.
+
+With **reshadow** the part above might look like:
+
+```js
+<container>
+    <tooltip>
+        <content>{this.props.children}</content>
+
+        <tail as="span" />
+    </tooltip>
+</container>
+```
+
+By default, for elements, that are not supported by the `web platform`, **reshadow** uses fallback to the `div` element (you can change this option in [babel options](/setup#babel)).
+
+Thus, **reshadow** brings semantics to the fore, and it's more about _how your component semantically presented_.
+
+So, the mark up above could be styled this way:
+
+> **reshadow** will automatically match the elements and styles, so you don't need to match any of them by hands (like in native `CSS` and `HTML` 😉)
+
+```css
+container {
+    display: flex;
+    /* container styles */
+}
+
+content {
+    /* content styles */
+}
+
+/* other elements styles */
+```
+
+### `as` attribute
+
+It is also possible to apply `as` attribute for any kind of elements to force an element to be presented in DOM as specified.
+
+```js
+/* it would be <span>my content<span> in DOM */
+
+<content as="span">my content</content>
+```
+
+## props and modifiers
+
+Any element or Component declares its own interface, which could be named as `props` in `React` way. So **reshadow** determines `props` and `modifiers` as follows:
+
+-   Props - a part of the Component's or element's interface
+-   Modifier - a property, that you need to set to style the element or Component, but this property was not declared by the interface.
+
+For example, let's consider the `button` element. You can pass the `disabled` attribute to the button, and this is a part of its interface. But what if you want to set `button`'s `size`? In terms of **reshadow** `disabled` would be the **prop**, and `size` - **modifier**.
+
+**reshadow** allows setting modifiers with the `use` namespace.
+
+```js
+/**
+ * disabled - prop
+ * use:size - modifier 'size' with value 's'
+ **/
+
+<button disabled use:size="s">
+    click me
+</button>
+
+<Button disabled use:size="s">
+    click me
+</Button>
+```
+
+It is also possible to use the function `use` instead of jsx-namespaces:
+
+```js
+import {use} from 'reshadow';
+
+<button disabled {...use({size: 's'})}>
+    click me
+</button>
+
+<Button disabled {...use({size: 's'})}>
+    click me
+</Button>
+```
+
+All modifiers will be cut with the **reshadow**, so they won't be passed to the element or Component.
+
+Both examples will correspond to the following styles:
+
+```css
+button[disabled] {
+    /* styles for the disabled button */
+}
+
+button[use|size='s'] {
+    /* styles for the button with size: m */
+}
+```
+
+For the `Button` Component:
+
+```css
+Button[disabled] {
+    /* the same for the Button Component */
+}
+
+Button[use|size='s'] {
+    /* the same for the Button Component with size: m */
+}
+```
+
+It is also possible to use syntax-sugar for modifiers (omit the `use` namespace):
+
+```css
+button[|size='m'] {
+    /* styles for the button with size: m */
+}
+```
+
+And you can also use syntax-sugar for pattern-matching for the attributes:
+
+```css
+button[type] {
+    &='submit' {
+        /* styles for the [type="submit"] */
+    }
+
+    &=reset {
+        /* styles for the [type=reset] */
+    }
+}
+
+button[|size] {
+    &='s' {
+        /* styles for the [use|size="s"] */
+    }
+
+    &=m {
+        /* styles for the [use|size=m] */
+    }
+}
+```
