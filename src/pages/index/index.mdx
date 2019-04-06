@@ -82,7 +82,7 @@ Let's start with a simple `Button` component.
 }}
 </Editor>
 
-Note that with `styled(styles)` you can apply styles to the Virtual DOM. In addition, you can apply to the `styled` function any number of arguments, like `styled(styles1, styles2, ...)`, so the `styled` function will compose all of theme together.
+Note that with `styled(styles)` you can apply styles to the Virtual DOM. In addition, you can apply to the `styled` function any number of arguments, like `styled(styles1, styles2, ...)`, so the `styled` function will compose all of them together.
 
 Okay, so let's add some runtime to the `Button` styles to make our `Button` more interactive.
 
@@ -100,6 +100,7 @@ Okay, so let's add some runtime to the `Button` styles to make our `Button` more
     code: [
         `
         import {readableColor, rgba} from 'polished'
+
         import styles from './styles.css'
 
         const Button = ({bgcolor, children, ...props}) => styled(styles)\`

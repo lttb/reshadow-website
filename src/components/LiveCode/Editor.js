@@ -77,6 +77,7 @@ export default class Editor extends Component<Props> {
                     style={{
                         fontFamily: '"Fira code", "Fira Mono", monospace',
                         fontSize: 12,
+                        overflow: 'auto',
                     }}
                 />
             </root>,
