@@ -19,7 +19,7 @@ Write semantic mark up and styles, as the soul wants.
 > This project has `alpha` status, so the API and the implementation could be changed.
 
 ```sh
-npm install --save reshadow@alpha
+npm install --save reshadow
 ```
 
 **reshadow** provides the Shadow DOM developer experience, but for the Virtual DOM with the Component way.
@@ -35,8 +35,6 @@ npm install --save reshadow@alpha
 -   Combine the `css-in-js` and `css-modules` approaches or choose which fits you better
 -   All the benefits of the PostCSS ecosystem
 -   Interoperable. Use it with components in [React](https://github.com/facebook/react), [Preact](https://github.com/developit/preact/), [Vue](https://github.com/vuejs/vue), [htm](https://github.com/developit/htm/).
-
-Please check the [reshadow.dev](https://reshadow.dev) for more information and examples.
 
 There are some examples on the [Сodesandbox](https://codesandbox.io):
 
@@ -121,7 +119,7 @@ Okay, so let's add some runtime to the `Button` styles to make our `Button` more
     `,
         `
         <Button bgcolor="lightblue">
-            Light Blue
+            Lightblue
         </Button>
     `,
     ],
@@ -299,16 +297,16 @@ And it is also possible to match styles on the Components.
                     display: flex;
                 }
 
-                Button + Button {
-                    margin-left: 10px;
+                Button + Button[size="m"] {
+                    margin-left: 12px;
                 }
             \`(
                 <section>
-                    <Button bgcolor="lightgray">
+                    <Button size="m" bgcolor="lightgray">
                         Lightgray
                     </Button>
-                    <Button bgcolor="rebeccapurple">
-                        Rebeccapurple
+                    <Button size="m" bgcolor="lightblue">
+                        Lightblue
                     </Button>
                 </section>
             )
