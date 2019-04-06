@@ -7,7 +7,7 @@ import styled from 'reshadow';
 
 import Editor from '@/components/LiveCode';
 
-# reshadow ⛱️
+# reshadow
 
 Write semantic mark up and styles, as the soul wants.
 
@@ -292,6 +292,10 @@ And it is also possible to match styles on the Components.
         `,
         `
             styled\`
+                section {
+                    display: flex;
+                }
+
                 Button + Button {
                     margin-left: 10px;
                 }

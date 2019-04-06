@@ -1,53 +1,94 @@
 const webpack = require('webpack');
-const {css} = require('docz-plugin-css');
+const {css: cssPlugin} = require('docz-plugin-css');
+const {css} = require('styled-components');
 
 module.exports = {
     title: 'reshadow ⛱️',
     description: 'reshadow documentation',
-    src: './src',
-    files: 'pages/**/*.mdx',
+    files: './src/pages/**/*.mdx',
     dest: '/dist',
     repository: 'https://github.com/lttb/reshadow',
     editBranch: 'master',
     themeConfig: {
         colors: {
-            primary: '#1990b8',
+            primary: '#097aa0',
             background: '#fafafa',
             text: '#1D2330',
-            sidebarBg: '#fff',
+            sidebarBg: '#fffffff0',
             sidebarText: '#222',
         },
         styles: {
-            sidebar: {
-                boxShadow: '0px 0px 10px -5px',
-            },
-            playground: {
-                background: '#fafafa',
-            },
-            ul: {
-                '& &': {
-                    marginLeft: 25,
+            body: css`
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+                    Helvetica, Arial, sans-serif, 'Apple Color Emoji',
+                    'Segoe UI Emoji', 'Segoe UI Symbol';
+                font-size: 18px !important;
+                line-height: 1.6;
+                font-style: normal;
+                -webkit-font-smoothing: subpixel-antialiased;
+            `,
+            code: css`
+                border: 1px solid rgba(0, 0, 0, 0.02);
+                font-family: 'Inconsolata', monospace;
+            `,
+            pre: css`
+                font-size: 12px !important;
+                font-family: 'Fira code', 'Fira Mono', monospace;
+            `,
+            container: css`
+                background: #fafafa;
+                min-height: 100%;
+                border: 2px solid #087aa0;
+                box-shadow: 0px 0px 10px -5px white;
 
-                    '& li': {
-                        '&::before': {
-                            content: '"○ "',
-                        },
-                    },
-                },
-            },
+                @media (min-width: 1024px) {
+                    width: 1024px;
+                }
+
+                & > a {
+                    border-radius: 12px;
+                    background: white;
+
+                    @media (min-width: 920px) {
+                        right: 80px;
+                    }
+                }
+            `,
+            sidebar: css`
+                box-shadow: 0px 0px 10px -5px;
+
+                /* a trick to set background for the page */
+                & ~ div {
+                    background-image: linear-gradient(
+                        to right top,
+                        #051937,
+                        #133f5f,
+                        #296986,
+                        #4996aa,
+                        #72c5cb
+                    );
+                }
+            `,
+            ul: css`
+                padding: 0;
+
+                & & li::before {
+                    content: '○ ';
+                }
+            `,
         },
     },
     menu: ['reshadow', 'getting started', 'usage', 'setup', 'linting'],
     plugins: [
-        css({
+        cssPlugin({
             preprocessor: 'postcss',
         }),
     ],
     modifyBundlerConfig(config, dev) {
         config.plugins.push(
-            new webpack.IgnorePlugin({
-                resourceRegExp: /^module$/,
-            }),
+            // new webpack.IgnorePlugin({
+            //     resourceRegExp: /^module$/,
+            // }),
 
             new webpack.NormalModuleReplacementPlugin(
                 /^buble/,
@@ -59,6 +100,13 @@ module.exports = {
                 require.resolve('./configs/stubs/postcss-plugin.js'),
             ),
         );
+
+        // config.module.rules.push({
+        //     test: /\.js$/,
+        //     type: 'javascript/auto',
+        // });
+
+        console.log(config.module.rules);
 
         /* resolve only browser and main fields */
         config.resolve.mainFields = ['browser', 'main'];

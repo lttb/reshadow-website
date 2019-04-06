@@ -77,7 +77,7 @@ window.require = function(module) {
     }
 };
 
-const CodeEditor = ({children, filename, maxHeight = '200px'}) => {
+const CodeEditor = ({children, filename, maxHeight = '350px'}) => {
     const React = require('react');
     const resolve = require('resolve');
 
