@@ -64,6 +64,13 @@ module.exports = {
                 & nav > div:first-child {
                     display: none;
                 }
+
+                /* style the Hamburger */
+                & > div > button {
+                    background: none;
+                    top: 0;
+                    right: -40px;
+                }
             `,
             ul: css`
                 padding: 0;

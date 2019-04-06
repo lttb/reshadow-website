@@ -66,12 +66,28 @@ const Page = ({children, ...props}) => {
 
         article {
             padding-top: 20px;
+            margin-bottom: 40px;
             background: #fafafa;
             min-height: 100%;
             border: 3px solid #087aa0;
             box-shadow: 0px 0px 10px -5px white;
             border-radius: 16px;
             min-height: 50vh;
+        }
+
+        @media (max-width: 450px) {
+            header,
+            article {
+                padding: 0 20px;
+            }
+
+            header {
+                margin-top: 32px;
+            }
+
+            h1 {
+                font-size: 42px;
+            }
         }
     `(
         components.page({
