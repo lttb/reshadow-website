@@ -21,7 +21,7 @@ registerPlugin('reshadow/babel', reshadowBabel);
 registerPlugin('@babel/plugin-transform-modules-commonjs', transformModles);
 registerPreset('@babel/preset-react', presetReact);
 
-const getOptions = options => ({
+const getOptions = (options = {}) => ({
     root: __dirname,
     filename: __filename,
     presets: [
@@ -83,7 +83,7 @@ const CodeEditor = ({
     direction,
     filename,
     maxHeight = '350px',
-    options,
+    options = {},
 }) => {
     const React = require('react');
     const resolve = require('resolve');
