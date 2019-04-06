@@ -70,6 +70,11 @@ module.exports = {
                         #72c5cb
                     );
                 }
+
+                /* hide main page */
+                & nav > div:first-child {
+                    display: none;
+                }
             `,
             ul: css`
                 padding: 0;
