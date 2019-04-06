@@ -59,6 +59,7 @@ const Page = ({children, ...props}) => {
 
         h1 {
             font-size: 50px;
+            line-height: 1.2;
         }
 
         header,
