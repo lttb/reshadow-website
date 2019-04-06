@@ -67,17 +67,17 @@ const Page = ({children, ...props}) => {
         }
 
         header {
-            margin-bottom: 20px;
+            margin-bottom: 40px;
+            margin-top: 28px;
         }
 
         article {
             padding-top: 20px;
-            margin-bottom: 40px;
             background: #fafafa;
             min-height: 100%;
             border: 3px solid #087aa0;
             box-shadow: 0px 0px 10px -5px white;
-            border-radius: 16px;
+            border-radius: 16px 16px 0 0;
             min-height: 50vh;
         }
 
