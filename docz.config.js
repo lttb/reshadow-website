@@ -30,10 +30,11 @@ module.exports = {
             `,
             code: css`
                 border: 1px solid rgba(0, 0, 0, 0.02);
-                font-family: 'Inconsolata', monospace;
+                font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo,
+                    Courier, monospace;
             `,
             pre: css`
-                font-size: 12px !important;
+                font-size: 14px !important;
                 font-family: 'Fira code', 'Fira Mono', monospace;
             `,
             container: css`
@@ -92,7 +93,7 @@ module.exports = {
             `,
         },
     },
-    menu: ['reshadow', 'usage', 'advanced', 'setup'],
+    menu: ['reshadow', 'motivation', 'concepts', 'usage', 'advanced', 'setup'],
     plugins: [
         cssPlugin({
             preprocessor: 'postcss',

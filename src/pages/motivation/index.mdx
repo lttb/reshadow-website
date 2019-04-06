@@ -1,8 +1,6 @@
 ---
-name: about
-menu: usage
-order: 0
-route: /usage/about
+name: motivation
+route: /motivation
 ---
 
 import Editor from '@/components/LiveCode';
@@ -37,8 +35,8 @@ button[disabled] {
 <button disabled>click me</button>
 ```
 
-But, of course nowadays we have a lot of [problems](/about/problems) with global styles, so we need to use abstractions like `BEM`, `css-modules` and so on.
-We also have `Shadow DOM`, which can fix some kind of that problems like incapsulation, but there are also [many tradeoffs](/about/shadow-dom), and it often doesn't fit to the requirements.
+But, of course nowadays we have some troubles with global styles, and we need to use abstractions like `BEM`, `css-modules` and so on.
+We also have `Shadow DOM`, which can fix some kind of that problems like styles isolation, but there are also some tradeoffs, and it often doesn't fit to the requirements.
 
 As a result, **reshadow** created to solve these problems, in components era.
 It is possible to write HTML and CSS, but for Virtual DOM, like there is nothing else than just the Component.
@@ -72,7 +70,7 @@ It is possible to write HTML and CSS, but for Virtual DOM, like there is nothing
 
             const Button = ({bgcolor, children, ...props}) => styled(styles)(
                 <button {...props}>
-                    <content>{children}</content>
+                    <content as="span">{children}</content>
                 </button>
             );
         `,
@@ -84,9 +82,3 @@ It is possible to write HTML and CSS, but for Virtual DOM, like there is nothing
     ]
 }}
 </Editor>
-
-## elements
-
-## props and modifiers
-
-## `as` prop
