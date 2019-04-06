@@ -31,9 +31,10 @@ module.exports = {
             `,
             container: css`
                 padding: 0 !important;
+                width: 100%;
 
                 @media (min-width: 1024px) {
-                    width: 1024px;
+                    max-width: 1024px;
                 }
 
                 & > a {
