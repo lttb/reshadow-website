@@ -42,7 +42,11 @@ import Editor from '@/components/LiveCode';
             const elements = JSON.parse(styles.__elements__.slice(1, -1));
 
             const mapValues = values => Object.keys(values).map(key => (
-                <div key={key}><b>{key}</b>: <i>{values[key].join(' | ') || 'boolean'}</i></div>
+                <div key={key}>
+                    <b>{key.replace('--', ':')}</b>
+                    {': '}
+                    <i>{values[key].join(' | ') || 'boolean'}</i>
+                </div>
             ))
 
             styled\`
