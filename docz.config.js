@@ -50,6 +50,7 @@ module.exports = {
 
                 /* a trick to set background for the page */
                 & ~ div {
+                    min-height: 100vh;
                     background-image: linear-gradient(
                         to right top,
                         #051937,
@@ -58,6 +59,10 @@ module.exports = {
                         #4996aa,
                         #72c5cb
                     );
+
+                    &:last-child {
+                        z-index: 1;
+                    }
                 }
 
                 /* hide main page */

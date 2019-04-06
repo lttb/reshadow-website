@@ -31,8 +31,14 @@ const styles = css`
     :global(html),
     :global(body),
     :global(#root) {
-        height: 100%;
+        height: auto;
         min-height: 100%;
+    }
+
+    :global(html) {
+        /* fix scroll for mobiles */
+        height: 100vh;
+        overflow-y: auto !important;
     }
 `;
 
