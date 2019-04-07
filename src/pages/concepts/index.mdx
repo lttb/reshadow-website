@@ -31,12 +31,12 @@ There are no additional conventions and abstractions, it's just the way `HTML` a
 So, back to BEM, in terms of **reshadow** it could be presented by:
 
 -   **B**lock - Component,
--   **E**lement - Component's presentational elements (mark up),
+-   **E**lement - Component's presentational elements (markup),
 -   **M**odifiers - Component's props and its elements' attributes.
 
 ## elements
 
-Let's consider an abstract simplified part of mark up:
+Let's consider an abstract simplified part of markup:
 
 ```js
 <div className={styles.container}>
@@ -48,14 +48,15 @@ Let's consider an abstract simplified part of mark up:
 </div>
 ```
 
-Leaving aside the issue of quality of that code, `a11y` problems and so on, there is also a problem to read and understand this code. It's not clear, what is the **semantic** mark up of this Component, how it was decomposed, how you can also style it on your own.
+Leaving aside the issue of quality of that code, `a11y` problems and so on, there is also a problem to read and understand this code.
+It's not clear, what **semantics** lays under the markup of this Component, how it was decomposed, how you can also style it on your own.
 
-In fact, this mark up is presented by these elements:
+In fact, this markup is presented by these elements:
 
--   container
--   tooltip
--   content
--   tail
+-   container,
+-   tooltip,
+-   content,
+-   tail.
 
 It's important to note, that **elements** are not required to be necessary `HTML` elements. These elements are highlighted semantically.
 
@@ -71,13 +72,11 @@ With **reshadow** the part above might look like:
 </container>
 ```
 
-By default, for elements, that are not supported by the `web platform`, **reshadow** uses fallback to the `div` element (you can change this option in [babel options](/setup#babel)).
+By default for elements that are not supported by the `web platform` **reshadow** uses fallback to the `div` element (you can change this option in [babel options](/setup#babel)).
 
-Thus, **reshadow** brings semantics to the fore, and it's more about _how your component semantically presented_.
+Thus, **reshadow** brings semantics to the first place, and it's more about _how your component is semantically presented_.
 
-So, the mark up above could be styled this way:
-
-> **reshadow** will automatically match the elements and styles, so you don't need to match any of them by hands (like in native `CSS` and `HTML` 😉)
+So, the markup above could be styled this way:
 
 ```css
 container {
@@ -92,22 +91,30 @@ content {
 /* other elements styles */
 ```
 
+> **reshadow** will automatically match the elements and styles, so you don't need to match any of them by hands (like in bare `CSS` and `HTML` without classes 😉).
+
 ### `as` attribute
 
-It is also possible to apply `as` attribute for any kind of elements to force an element to be presented in DOM as specified.
+It is also possible to apply `as` attribute for any kind of elements to force an element to be presented in DOM with specific tag name.
 
 ```js
-/* it would be <span>my content<span> in DOM */
+/*
+ * it will be <span>my content</span> in DOM
+ * (instead of <div>my content</div> by default)
+ */
 
 <content as="span">my content</content>
 ```
 
 ## props and modifiers
 
-Any element or Component declares its own interface, which could be named as `props` in `React` way. So **reshadow** determines `props` and `modifiers` as follows:
+Any element or Component declares its own programming interface, which could be named as `props` in `React` way.
+**reshadow** allows you to apply any modifiers to existing Components without editing them, so you're able to do minor ad hoc stylization of your Components or [completely restyle it](/advanced/override).
+The Component has no access to its modifiers because they're not included in its interface.
+`props` and `modifiers` are defined as follows:
 
--   Props - a part of the Component's or element's interface
--   Modifier - a property, that you need to set to style the element or Component, but this property was not declared by the interface.
+-   prop - a part of the Component's or element's interface,
+-   modifier - a property that you can set to style the element or Component, but this property was not declared by the interface (among props).
 
 For example, let's consider the `button` element. You can pass the `disabled` attribute to the button, and this is a part of its interface. But what if you want to set `button`'s `size`? In terms of **reshadow** `disabled` would be the **prop**, and `size` - **modifier**.
 
@@ -116,8 +123,8 @@ For example, let's consider the `button` element. You can pass the `disabled` at
 ```js
 /**
  * disabled - prop
- * use:size - modifier 'size' with value 's'
- **/
+ * use:size="s" - modifier 'size' with value 's'
+ */
 
 <button disabled use:size="s">
     click me
@@ -156,11 +163,12 @@ button[use|size='s'] {
 }
 ```
 
-For the `Button` Component:
+You're able to match your CSS styles to the root DOM-node of any Component you use.
+Inside the styles for some Component using `Button` Component inside:
 
 ```css
 Button[disabled] {
-    /* the same for the Button Component */
+    /* styles for disabled Button Component */
 }
 
 Button[use|size='s'] {
