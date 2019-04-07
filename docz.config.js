@@ -10,6 +10,10 @@ module.exports = {
     repository: 'https://github.com/lttb/reshadow',
     editBranch: 'master',
     theme: require.resolve('./src/components/Theme'),
+    public: './src/public',
+    htmlContext: {
+        favicon: '/public/favicon/favicon.ico',
+    },
     themeConfig: {
         colors: {
             primary: '#097aa0',
@@ -74,7 +78,7 @@ module.exports = {
                 /* style the Hamburger */
                 & > div > button {
                     background: none;
-                    top: 0;
+                    top: 10px;
                     right: -40px;
                 }
             `,

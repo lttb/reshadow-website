@@ -11,7 +11,6 @@ let index = 0;
 const CodeEditor = ({
     children,
     direction,
-    filename,
     maxHeight = '350px',
     options = {},
 }) => {
@@ -95,7 +94,7 @@ const CodeEditor = ({
             <Preview
                 scripts={scripts}
                 files={scriptFiles}
-                filename={filename + ref.current.hash}
+                filename={`/${ref.current.hash}/index.js`}
                 options={options}
             />
         </root>,

@@ -83,14 +83,14 @@ const Page = ({children, ...props}) => {
             min-height: 50vh;
         }
 
-        @media (max-width: 450px) {
+        @media (max-width: 1024px) {
             header,
             article {
                 padding: 0 5rem;
             }
 
             header {
-                margin-top: 8rem;
+                margin-top: 12rem;
             }
 
             h1 {

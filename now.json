@@ -7,8 +7,8 @@
         "use": "@now/static-build"
     }],
     "routes": [{
-        "src": "/static/(.*)",
-        "dest": "/static/$1"
+        "src": "/(static|public)/(.*)",
+        "dest": "/$1/$2"
     }, {
         "src": "^/(.*)",
         "dest": "/index.html"
