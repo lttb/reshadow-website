@@ -78,8 +78,9 @@ module.exports = {
                 /* style the Hamburger */
                 & > div > button {
                     background: none;
-                    top: 10px;
+                    top: 0px;
                     right: -40px;
+                    padding-top: 10px;
                 }
             `,
             ul: css`
