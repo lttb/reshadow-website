@@ -48,8 +48,9 @@ import Editor from '@/components/LiveCode';
                     <i>{values[key].join(' | ') || 'boolean'}</i>
                 </div>
             ))
-
-            styled\`
+        `,
+        `
+            {styled\`
                 table {
                     width: 100%;
                 }
@@ -80,7 +81,7 @@ import Editor from '@/components/LiveCode';
                         ))}
                     </tbody>
                 </table>
-            )
+            )}
         `,
     ]
 

@@ -93,7 +93,7 @@ const CodeEditor = ({
             </editor>
 
             <Preview
-                code={scripts.join('\n')}
+                scripts={scripts}
                 files={scriptFiles}
                 filename={filename + ref.current.hash}
                 options={options}

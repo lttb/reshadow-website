@@ -1,66 +1,10 @@
 import React from 'react';
 import styled from 'reshadow';
 
-import fs from 'fs';
-import {registerPlugin, registerPreset, transform} from '@babel/standalone';
-import presetReact from '@babel/preset-react';
-import reshadowBabel from 'reshadow/babel';
-import transformModles from '@babel/plugin-transform-modules-commonjs';
-
 import {debounce} from 'lodash';
+import {codeBlock} from 'common-tags';
 
-/**
- * Mocks for the postcss-import-sync2
- */
-fs.stat = () => '';
-fs.readFile = () => '';
-
-registerPlugin('reshadow/babel', reshadowBabel);
-registerPlugin('@babel/plugin-transform-modules-commonjs', transformModles);
-registerPreset('@babel/preset-react', presetReact);
-
-const getOptions = (options = {}) => ({
-    root: __dirname,
-    filename: __filename,
-    presets: [
-        [
-            '@babel/preset-react',
-            {
-                throwIfNamespace: false,
-                useBuiltIns: true,
-            },
-        ],
-    ],
-    plugins: [
-        [
-            'reshadow/babel',
-            {
-                postcss: true,
-                files: /\.css$/,
-                ...options.reshadow,
-            },
-        ],
-        '@babel/plugin-transform-modules-commonjs',
-    ],
-});
-
-const evalCode = async (data, {filename, ...options}) => {
-    const {code} = await transform(
-        `
-                import React from 'react';
-                import styled from 'reshadow';
-                ${data}
-            `,
-        {
-            ...getOptions(options),
-            filename,
-        },
-    );
-
-    // We definitely need to do `eval` here
-    // eslint-disable-next-line no-eval
-    return eval(code);
-};
+import evalCode from './evalCode';
 
 class ErrorBoundary extends React.Component {
     state = {
@@ -123,18 +67,34 @@ class ErrorBoundary extends React.Component {
     }
 }
 
-window.require = function(module) {
-    switch (module) {
-        case 'polished':
-            return require('polished');
-        case 'reshadow':
-            return require('reshadow');
-        case 'react':
-            return require('react');
-    }
+const createRenderer = ({setElement, setError}) => (
+    scripts,
+    files,
+    options,
+) => {
+    const readFile = path => files[path];
+
+    const chunks = scripts
+        .slice(0, -1)
+        .map(codeBlock)
+        .join('\n');
+    const [render] = scripts.slice(-1);
+
+    const source = codeBlock`
+        import React from 'react';
+        import styled from 'reshadow';
+        ${chunks};
+        <>
+            ${render}
+        </>
+    `;
+
+    return evalCode(source, readFile, options)
+        .then(setElement)
+        .catch(setError);
 };
 
-const Preview = ({code, files, filename, options}) => {
+const Preview = ({scripts, files, filename, options}) => {
     const [state, setState] = React.useState({element: null});
 
     const setElement = element => setState({element});
@@ -142,21 +102,18 @@ const Preview = ({code, files, filename, options}) => {
 
     const renderElement = React.useMemo(
         () =>
-            debounce((code, files, options) => {
-                /* mock file resolvers */
-                const resolve = require('resolve');
-                resolve.sync = file => file;
-                fs.readFileSync = path => files[path];
-
-                return evalCode(code, options)
-                    .then(setElement)
-                    .catch(setError);
-            }, 200),
+            debounce(
+                createRenderer({
+                    setElement,
+                    setError,
+                }),
+                200,
+            ),
         [],
     );
 
     React.useEffect(() => {
-        renderElement(code, files, {
+        renderElement(scripts, files, {
             ...options,
             filename,
         });
@@ -164,7 +121,7 @@ const Preview = ({code, files, filename, options}) => {
         if (!state.element) {
             renderElement.flush();
         }
-    }, [code, files]);
+    }, [scripts, files]);
 
     return styled`
         preview {
@@ -172,7 +129,7 @@ const Preview = ({code, files, filename, options}) => {
             flex: 1;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-around;
             border-radius: 0px 3rem 3rem 0px;
             padding: 6rem 7rem;
         }
@@ -185,5 +142,6 @@ const Preview = ({code, files, filename, options}) => {
 
 export default React.memo(
     Preview,
-    ({code, files}, next) => code === next.code && files === next.files,
+    ({scripts, files}, next) =>
+        scripts === next.scripts && files === next.files,
 );
