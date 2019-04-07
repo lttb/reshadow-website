@@ -21,12 +21,12 @@ module.exports = {
         },
         styles: {
             code: css`
-                border: 1px solid rgba(0, 0, 0, 0.02);
+                border: 0.25rem solid rgba(0, 0, 0, 0.02);
                 font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo,
                     Courier, monospace;
             `,
             pre: css`
-                font-size: 14px !important;
+                font-size: 3.5rem !important;
                 font-family: 'Fira code', 'Fira Mono', monospace;
             `,
             container: css`
@@ -38,7 +38,7 @@ module.exports = {
                 }
 
                 & > a {
-                    border-radius: 12px;
+                    border-radius: 3rem;
                     background: white;
 
                     @media (min-width: 920px) {
@@ -47,7 +47,7 @@ module.exports = {
                 }
             `,
             sidebar: css`
-                box-shadow: 0px 0px 10px -5px;
+                box-shadow: 0px 0px 3rem -1rem;
 
                 /* a trick to set background for the page */
                 & ~ div {
@@ -84,19 +84,15 @@ module.exports = {
                 & li::before {
                     content: '●';
                     font-size: 0.6em;
-                    margin-right: 10px;
+                    margin-right: 3rem;
                     vertical-align: middle;
                     display: inline-block;
-                    margin-bottom: 3px;
+                    margin-bottom: 1rem;
                 }
 
                 & & li::before {
                     content: '○ ';
                 }
-            `,
-            h1: css`
-                font-size: 52px !important;
-                margin: 12px 0;
             `,
         },
     },

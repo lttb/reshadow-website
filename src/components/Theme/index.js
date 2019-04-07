@@ -22,7 +22,7 @@ const styles = css`
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica,
             Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
             'Segoe UI Symbol';
-        font-size: 18px;
+        font-size: 4.5rem;
         line-height: 1.6;
         font-style: normal;
         -webkit-font-smoothing: subpixel-antialiased;
@@ -39,6 +39,7 @@ const styles = css`
         /* fix scroll for mobiles */
         height: 100vh;
         overflow-y: auto !important;
+        font-size: 4px;
     }
 `;
 
@@ -58,42 +59,42 @@ const Page = ({children, ...props}) => {
         }
 
         h1 {
-            font-size: 50px;
+            font-size: 13rem;
             line-height: 1.2;
         }
 
         header,
         article {
-            padding: 0 40px;
+            padding: 0 10rem;
         }
 
         header {
-            margin-bottom: 40px;
-            margin-top: 28px;
+            margin-bottom: 10rem;
+            margin-top: 7rem;
         }
 
         article {
-            padding-top: 20px;
+            padding-top: 5rem;
             background: #fafafa;
             min-height: 100%;
-            border: 3px solid #087aa0;
-            box-shadow: 0px 0px 10px -5px white;
-            border-radius: 16px 16px 0 0;
+            border: 0.5rem solid #087aa0;
+            box-shadow: 0px 0px 3rem -1rem white;
+            border-radius: 4rem 4rem 0 0;
             min-height: 50vh;
         }
 
         @media (max-width: 450px) {
             header,
             article {
-                padding: 0 20px;
+                padding: 0 5rem;
             }
 
             header {
-                margin-top: 32px;
+                margin-top: 8rem;
             }
 
             h1 {
-                font-size: 42px;
+                font-size: 11rem;
             }
         }
     `(

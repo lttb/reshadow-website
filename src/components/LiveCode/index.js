@@ -10,16 +10,16 @@ const CodeEditor = React.lazy(() =>
 );
 
 const LiveCode = props => (
-    <LazyLoad height={200} offset={300} once>
+    <LazyLoad height={200} offset={200} once>
         <Suspense
             fallback={styled`
                 loading {
                     width: 100%;
-                    height: 200px;
+                    height: 50rem;
                     display: flex;
                     align-items: center;
                     justify-content: center;
-                    font-size: 32px;
+                    font-size: 8rem;
                     color: #008ebd;
                 }
             `(<loading>Loading Playground...</loading>)}

@@ -19,8 +19,11 @@ export default class Editor extends Component<Props> {
         return this.props.file !== nextProps.file;
     }
 
+    onChange = this.props.onChange;
+
     render() {
-        const {file, language, maxHeight, path, onChange} = this.props;
+        const {file, language, maxHeight, path} = this.props;
+
         return styled`
             :global(.token.operator) {
                 background: none !important;
@@ -30,8 +33,8 @@ export default class Editor extends Component<Props> {
                 max-height: ${maxHeight};
                 overflow: scroll;
                 background: #f6f8fa;
-                padding: 5px 10px;
-                box-shadow: inset 0px 0px 10px -9px;
+                padding: 1rem 3rem;
+                box-shadow: inset 0px 0px 3rem -2.5rem;
                 transition: background 0.3s;
 
                 &:focus-within {
@@ -39,18 +42,18 @@ export default class Editor extends Component<Props> {
                 }
 
                 & + root {
-                    margin-top: 10px;
+                    margin-top: 3rem;
                 }
 
                 & path {
                     font-weight: bold;
                     padding: 0;
                     float: right;
-                    font-size: 13px;
+                    font-size: 3rem;
                     color: #29687d;
                     position: sticky;
                     top: 0;
-                    right: 10px;
+                    right: 2rem;
                 }
 
                 & :global(textarea):focus {
@@ -73,10 +76,10 @@ export default class Editor extends Component<Props> {
                         />
                     )}
                     value={codeBlock(file)}
-                    onValueChange={onChange}
+                    onValueChange={this.onChange}
                     style={{
                         fontFamily: '"Fira code", "Fira Mono", monospace',
-                        fontSize: 12,
+                        fontSize: '3rem',
                         overflow: 'auto',
                     }}
                 />
