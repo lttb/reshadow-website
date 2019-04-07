@@ -47,7 +47,12 @@ const Page = ({children, ...props}) => {
     const {doc} = props;
 
     React.useEffect(() => {
-        document.title = doc.title || 'reshadow ⛱️';
+        if (doc.route === '/') {
+            document.title = 'reshadow';
+        } else {
+            document.title = doc.title ? `reshadow / ${doc.title}` : 'reshadow';
+        }
+
         document.description = doc.description || 'reshadow website';
     }, [doc.title, doc.description]);
 
