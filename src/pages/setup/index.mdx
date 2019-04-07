@@ -4,11 +4,13 @@ route: /setup
 title: Setup
 ---
 
-In order to start using `reshadow` you only need `Babel` which you most likely already use(for transpiling `JSX` syntax or your code for older browsers). You can also delegate styles processing to `PostCSS`. And extract them into separate files with the provided webpack loader. Please read below.
+In order to start using `reshadow` you only need `Babel` which you most likely already use (for transpiling `JSX` syntax or modern JavaScript code for older browsers).
+You can also delegate styles processing to `PostCSS` and extract built CSS into separate files with the provided `webpack` loader.
+You'll find detailed instructions below.
 
 ## Macro
 
-If you use [CRA 2](https://github.com/facebook/create-react-app) (Create React App) or [babel-plugin-macros](https://github.com/kentcdodds/babel-plugin-macros). You can use `reshadow/macro` and it will work out of the box.
+If you use [CRA 2](https://github.com/facebook/create-react-app) (Create React App) or [babel-plugin-macros](https://github.com/kentcdodds/babel-plugin-macros) you can import `reshadow/macro` and it will bring you full `reshadow` power out of the box.
 
 ```js
 import React from 'react';
@@ -16,10 +18,10 @@ import styled from 'reshadow/macro';
 
 export const Button = ({children}) =>
     styled`
-    button {
-        /* button styles */
-    }
-`(<button>{children}</button>);
+        button {
+            /* button styles */
+        }
+    `(<button>{children}</button>);
 ```
 
 Options (via [babel-plugin-macros config](https://github.com/kentcdodds/babel-plugin-macros/blob/master/other/docs/author.md#config-experimental)) are the same as `reshadow` [babel options](#babel-options), but with different defaults:
