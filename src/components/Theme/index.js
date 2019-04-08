@@ -8,6 +8,20 @@ const styles = css`
     @import url('https://unpkg.com/codemirror@5.42.0/lib/codemirror.css');
     @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,600');
 
+    :global(html),
+    :global(body),
+    :global(#root) {
+        height: auto;
+        min-height: 100%;
+    }
+
+    :global(html) {
+        /* fix scroll for mobiles */
+        height: 100vh;
+        overflow-y: auto !important;
+        font-size: 4px;
+    }
+
     :global(.icon-link) {
         display: none;
     }
@@ -22,24 +36,10 @@ const styles = css`
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica,
             Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
             'Segoe UI Symbol';
-        font-size: 4.5rem;
+        font-size: 4rem;
         line-height: 1.6;
         font-style: normal;
         -webkit-font-smoothing: subpixel-antialiased;
-    }
-
-    :global(html),
-    :global(body),
-    :global(#root) {
-        height: auto;
-        min-height: 100%;
-    }
-
-    :global(html) {
-        /* fix scroll for mobiles */
-        height: 100vh;
-        overflow-y: auto !important;
-        font-size: 4px;
     }
 `;
 
