@@ -5,28 +5,49 @@ title: reshadow ⛱️
 description: Write semantic markup and styles, as the soul wants.
 ---
 
+import styled from 'reshadow';
+
 import Editor from '@/components/LiveCode';
+import FeatureList, {Feature} from './FeatureList';
+
+[![Travis branch](https://img.shields.io/travis/lttb/reshadow/master.svg?style=flat&color=lightgrey&labelColor=222)](https://travis-ci.org/lttb/reshadow)
+[![Coverage Status branch](https://img.shields.io/coveralls/lttb/reshadow/master.svg?style=flat&color=lightgrey&labelColor=222)](https://img.shields.io/coveralls/lttb/reshadow/master.svg?branch=master)
+[![npm version](https://img.shields.io/npm/v/reshadow.svg?style=flat&color=lightgrey&labelColor=222)](https://www.npmjs.com/package/reshadow)
+[![Babel Macro](https://img.shields.io/badge/babel--macro-%F0%9F%8E%A3-f5da55.svg?style=flat&color=lightgrey&labelColor=222)](https://github.com/kentcdodds/babel-plugin-macros)
 
 **reshadow** provides the Shadow DOM developer experience, but for the Virtual DOM with the Component way.
 
-> This project has `alpha` status, so the API and the implementation could be changed.
+<div style={{margin: '5rem 0', display: 'flex', flexWrap: 'wrap'}}>
+    <FeatureList render={(...styles) => styled(...styles)(<>
+        <feature>
+            <h3>🧘‍ Forget about CSS <b>classes</b></h3>
+            <p>Painless styles matching and so on</p>
+        </feature>
 
-[![Travis branch](https://img.shields.io/travis/lttb/reshadow/master.svg?style=flat-square&color=lightgrey&labelColor=222)](https://travis-ci.org/lttb/reshadow)
-[![Coverage Status branch](https://img.shields.io/coveralls/lttb/reshadow/master.svg?style=flat-square&color=lightgrey&labelColor=222)](https://img.shields.io/coveralls/lttb/reshadow/master.svg?branch=master)
-[![npm version](https://img.shields.io/npm/v/reshadow.svg?style=flat-square&color=lightgrey&labelColor=222)](https://www.npmjs.com/package/reshadow)
-[![Babel Macro](https://img.shields.io/badge/babel--macro-%F0%9F%8E%A3-f5da55.svg?style=flat-square&color=lightgrey&labelColor=222)](https://github.com/kentcdodds/babel-plugin-macros)
+        <feature>
+            <h3>📝 Basic <b>HTML</b> and <b>CSS</b> specification</h3>
+            <p>The best standard ever</p>
+        </feature>
 
-## Features
+        <feature>
+            <h3>🍭 Rich ad hoc <b>stylization</b> and <b>theming</b></h3>
+            <p>Some words about stylization</p>
+        </feature>
+    </>)} />
 
--   Get away from additional abstractions
-    -   Write isolated semantic styles for the Virtual DOM in a native like way
-    -   Match styles on the elements, components, and props. That's all you need
--   Compile-time styles processing and efficient runtime
--   Static styles extracting options
--   Static styles analysis
--   Combine the `css-in-js` and `css-modules` approaches or choose which fits you better
--   All the benefits of the PostCSS ecosystem
--   Interoperable. Use it with components in [React](https://github.com/facebook/react), [Preact](https://github.com/developit/preact/), [Vue](https://github.com/vuejs/vue), [htm](https://github.com/developit/htm/).
+    <FeatureList render={(...styles) => styled(...styles)(<>
+        <feature>
+            <h3>⚡<b>Compile-time</b> CSS processing and efficient runtime</h3>
+            <p>BLAZING FAST!!!!! Styles extracting. Dynamic values by css custom properties. Get all the benefits of the PostCSS ecosystem</p>
+        </feature>
+
+        <feature>
+            <h3>♾️ Framework <b>agnostic</b></h3>
+            <p>Interoperable. Use it with components in React, Preact, Vue, htm and so on.</p>
+        </feature>
+    </>)} />
+
+</div>
 
 There are some examples on the [Сodesandbox](https://codesandbox.io):
 
@@ -38,6 +59,8 @@ There are some examples on the [Сodesandbox](https://codesandbox.io):
 Please check the [Motivation](/motivation) page to get more information.
 
 ## Basics
+
+> This project has `alpha` status, so the API and the implementation could be changed.
 
 ```sh
 npm install --save reshadow
