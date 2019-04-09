@@ -19,7 +19,7 @@ const styles = css`
         /* fix scroll for mobiles */
         height: 100vh;
         overflow-y: auto !important;
-        font-size: 4px;
+        font-size: 25%;
     }
 
     :global(.icon-link) {
@@ -36,10 +36,14 @@ const styles = css`
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica,
             Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
             'Segoe UI Symbol';
-        font-size: 4rem;
+        font-size: 4.5rem;
         line-height: 1.6;
         font-style: normal;
         -webkit-font-smoothing: subpixel-antialiased;
+    }
+
+    @media (max-width: 979px) {
+        font-size: 4rem;
     }
 `;
 
@@ -70,36 +74,31 @@ const Page = ({children, ...props}) => {
 
         header,
         article {
-            padding: 0 10rem;
+            padding: 5rem;
         }
 
-        header {
-            margin-bottom: 10rem;
-            margin-top: 7rem;
+        header,
+        article > :global(div) {
+            max-width: 1024px;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         article {
-            padding-top: 5rem;
             background: #fafafa;
-            min-height: 100%;
-            border: 0.5rem solid #087aa0;
-            box-shadow: 0px 0px 3rem -1rem white;
+            border: 2px solid #087aa0;
+            box-shadow: 0px 0px 12px -4px white;
             border-radius: 4rem 4rem 0 0;
             min-height: 50vh;
+
+            & :global(p) {
+                max-width: 920px;
+            }
         }
 
         @media (max-width: 1024px) {
-            header,
-            article {
-                padding: 0 5rem;
-            }
-
             header {
-                margin-top: 12rem;
-            }
-
-            h1 {
-                font-size: 11rem;
+                margin-top: 5rem;
             }
         }
     `(

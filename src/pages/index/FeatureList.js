@@ -9,9 +9,9 @@ const FeatureList = ({render}) => styled`
         /* grid-template-columns: repeat(auto-fill, minmax(60rem, 1fr)); */
         display: flex;
         flex-direction: column;
-        margin: 4rem 0;
+        margin: 2rem 0;
         flex: 1;
-        min-width: 70rem;
+        min-width: 280px;
         padding-right: 4rem;
     }
 
@@ -20,12 +20,12 @@ const FeatureList = ({render}) => styled`
         flex-direction: column;
 
         & + feature {
-            margin-top: 8rem;
+            margin-top: 4rem;
         }
 
         & h3 {
-            color: #45717f;
-            font-size: 4rem;
+            color: #4a9bb7;
+            font-size: 5rem;
             font-weight: 300;
             margin: 0;
             margin-bottom: 2rem;

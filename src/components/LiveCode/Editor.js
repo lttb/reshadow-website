@@ -79,7 +79,7 @@ export default class Editor extends Component<Props> {
                     onValueChange={this.onChange}
                     style={{
                         fontFamily: '"Fira code", "Fira Mono", monospace',
-                        fontSize: '3rem',
+                        fontSize: '3.5rem',
                         overflow: 'auto',
                     }}
                 />

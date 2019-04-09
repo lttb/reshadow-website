@@ -17,7 +17,9 @@ import FeatureList, {Feature} from './FeatureList';
 
 **reshadow** provides the Shadow DOM developer experience, but for the Virtual DOM with the Component way.
 
-<div style={{margin: '5rem 0', display: 'flex', flexWrap: 'wrap'}}>
+> This project has `alpha` status, so the API and the implementation could be changed.
+
+<div style={{margin: '20px 0', display: 'flex', flexWrap: 'wrap'}}>
     <FeatureList render={(...styles) => styled(...styles)(<>
         <feature>
             <h3>🧘‍ Forget about CSS <b>classes</b></h3>
@@ -37,7 +39,7 @@ import FeatureList, {Feature} from './FeatureList';
 
     <FeatureList render={(...styles) => styled(...styles)(<>
         <feature>
-            <h3>⚡<b>Compile-time</b> CSS processing and efficient runtime</h3>
+            <h3>⚡ <b>Compile-time</b> CSS processing and efficient runtime</h3>
             <p>BLAZING FAST!!!!! Styles extracting. Dynamic values by css custom properties. Get all the benefits of the PostCSS ecosystem</p>
         </feature>
 
@@ -59,8 +61,6 @@ There are some examples on the [Сodesandbox](https://codesandbox.io):
 Please check the [Motivation](/motivation) page to get more information.
 
 ## Basics
-
-> This project has `alpha` status, so the API and the implementation could be changed.
 
 ```sh
 npm install --save reshadow
