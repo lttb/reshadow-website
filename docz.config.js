@@ -38,7 +38,7 @@ module.exports = {
                 width: 100%;
 
                 @media (min-width: 1024px) {
-                    max-width: 180rem;
+                    max-width: 270rem;
                     width: auto;
                 }
 

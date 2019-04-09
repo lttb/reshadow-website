@@ -27,25 +27,25 @@ import FeatureList, {Feature} from './FeatureList';
         </feature>
 
         <feature>
-            <h3>📝 Basic <b>HTML</b> and <b>CSS</b> specification</h3>
-            <p>The best standard ever</p>
-        </feature>
-
-        <feature>
-            <h3>🍭 Rich ad hoc <b>stylization</b> and <b>theming</b></h3>
-            <p>Some words about stylization</p>
-        </feature>
-    </>)} />
-
-    <FeatureList render={(...styles) => styled(...styles)(<>
-        <feature>
             <h3>⚡ <b>Compile-time</b> CSS processing and efficient runtime</h3>
             <p>BLAZING FAST!!!!! Styles extracting. Dynamic values by css custom properties. Get all the benefits of the PostCSS ecosystem</p>
         </feature>
 
         <feature>
+            <h3>📝 Basic <b>HTML</b> and <b>CSS</b> specification</h3>
+            <p>The best standard ever</p>
+        </feature>
+    </>)} />
+
+    <FeatureList render={(...styles) => styled(...styles)(<>
+        <feature>
             <h3>♾️ Framework <b>agnostic</b></h3>
             <p>Interoperable. Use it with components in React, Preact, Vue, htm and so on.</p>
+        </feature>
+
+        <feature>
+            <h3>🍭 Rich ad hoc <b>stylization</b> and <b>theming</b></h3>
+            <p>Some words about stylization</p>
         </feature>
     </>)} />
 

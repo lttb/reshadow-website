@@ -19,7 +19,7 @@ const styles = css`
         /* fix scroll for mobiles */
         height: 100vh;
         overflow-y: auto !important;
-        font-size: 25%;
+        font-size: 4px;
     }
 
     :global(.icon-link) {

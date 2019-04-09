@@ -20,7 +20,7 @@ const FeatureList = ({render}) => styled`
         flex-direction: column;
 
         & + feature {
-            margin-top: 4rem;
+            margin-top: 5rem;
         }
 
         & h3 {
@@ -28,7 +28,7 @@ const FeatureList = ({render}) => styled`
             font-size: 5rem;
             font-weight: 300;
             margin: 0;
-            margin-bottom: 2rem;
+            margin-bottom: 1rem;
         }
 
         & b {
