@@ -25,12 +25,12 @@ module.exports = {
         },
         styles: {
             code: css`
-                border: 0.25rem solid rgba(0, 0, 0, 0.02);
+                border: 1px solid rgba(0, 0, 0, 0.02);
                 font-family: SFMono-Regular, Consolas, Liberation Mono, Menlo,
                     Courier, monospace;
             `,
             pre: css`
-                font-size: 3.5rem !important;
+                font-size: 3rem !important;
                 font-family: 'Fira code', 'Fira Mono', monospace;
             `,
             container: css`
@@ -38,7 +38,8 @@ module.exports = {
                 width: 100%;
 
                 @media (min-width: 1024px) {
-                    max-width: 1024px;
+                    max-width: 270rem;
+                    width: auto;
                 }
 
                 & > a {
@@ -82,6 +83,15 @@ module.exports = {
                     right: -40px;
                     padding-top: 10px;
                 }
+
+                /* override link styles */
+                & a {
+                    font-size: 5rem;
+                }
+
+                & h1 {
+                    font-size: 7rem;
+                }
             `,
             ul: css`
                 padding: 0;
@@ -98,6 +108,12 @@ module.exports = {
                 & & li::before {
                     content: '○ ';
                 }
+            `,
+            h2: css`
+                font-size: 9rem;
+            `,
+            h3: css`
+                font-size: 6rem;
             `,
         },
     },
