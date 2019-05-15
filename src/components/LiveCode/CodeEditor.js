@@ -45,7 +45,7 @@ const CodeEditor = ({
             max-width: 100%;
             background: #f0f4f6;
 
-            & html|pre {
+            & :global(pre) {
                 margin: 0;
 
                 &:focus {

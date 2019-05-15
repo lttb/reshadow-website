@@ -52,6 +52,8 @@ window.require = function(module) {
             return require('reshadow');
         case 'react':
             return require('react');
+        case '@reshadow/core':
+            return require('@reshadow/core');
     }
 };
 

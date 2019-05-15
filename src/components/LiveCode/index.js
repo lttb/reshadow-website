@@ -4,9 +4,11 @@ import LazyLoad from 'react-lazyload';
 import styled from 'reshadow';
 
 const CodeEditor = React.lazy(() =>
-    import(/* webpackChunkName: "code-editor" */
-    /* webpackPreload: true */
-    './CodeEditor'),
+    import(
+        /* webpackChunkName: "code-editor" */
+        /* webpackPreload: true */
+        './CodeEditor'
+    ),
 );
 
 const LiveCode = props => (

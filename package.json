@@ -36,7 +36,7 @@
         "react-dom": "^16.8.3",
         "react-lazyload": "^2.5.0",
         "react-live": "2.0.0",
-        "reshadow": "0.0.1-alpha.14"
+        "reshadow": "0.0.1-alpha.26"
     },
     "devDependencies": {
         "babel-eslint": "^10.0.1",
