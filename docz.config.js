@@ -11,6 +11,7 @@ module.exports = {
     editBranch: 'master',
     theme: require.resolve('./src/components/Theme'),
     public: './src/public',
+    indexHtml: './src/public/index.html',
     htmlContext: {
         favicon: '/public/favicon/favicon.ico',
     },
