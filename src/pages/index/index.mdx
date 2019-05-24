@@ -60,7 +60,7 @@ import styled from 'reshadow';
 
 Let's start with a simple `Button` component.
 
-We can use `css-in-js` approach here with the function `css`:
+We can use `css-in-js` approach here with `css` function:
 
 <Editor filename={__filename}>{{
     code: [
@@ -96,7 +96,7 @@ We can use `css-in-js` approach here with the function `css`:
 
 </Editor>
 
-And the same with the `styled` function:
+And the same with `styled` function:
 
 <Editor filename={__filename}>
     {{
@@ -127,7 +127,7 @@ And the same with the `styled` function:
     }}
 </Editor>
 
-Important notice here is that all styles were processed during the building, so **there is no runtime styles processing**.
+Important note - all styles are processed during the build time, therefore **there is no runtime styles processing**.
 
 It is also possible to use **reshadow** with separate `css` files.
 
