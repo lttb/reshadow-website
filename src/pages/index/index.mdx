@@ -46,50 +46,21 @@ Please check the [Motivation](/motivation) and [Concepts](/concepts) pages to ge
 npm install --save reshadow
 ```
 
+_.babelrc_
+
+```json
+{"plugins": ["reshadow/babel"]}
+```
+
+> Check the [Setup](/setup) page to get more details (including setup with Create React App)
+
 ```js
 import styled from 'reshadow';
 ```
 
 Let's start with a simple `Button` component.
 
-<Editor filename={__filename}>{{
-    files: {
-        './styles.css': `
-            button {
-                font-size: 16px;
-                cursor: pointer;
-                padding: 10px 15px;
-                border-radius: 20px;
-                border: 2px solid;
-                background-color: white;
-                color: steelblue;
-            }
-        `
-    },
-    code: [
-        `
-        import styles from './styles.css'\n
-
-        const Button = ({children, ...props}) => styled(styles)(
-            <button {...props}>
-                {children}
-            </button>,
-        );
-        `,
-        `
-        <Button>
-            Simple Button
-        </Button>
-    `,
-    ],
-
-}}
-
-</Editor>
-
-Note that with `styled(styles)` you can apply styles to the Virtual DOM. In addition, you can apply to the `styled` function any number of arguments, like `styled(styles1, styles2, ...)`, so the `styled` function will compose all of them together.
-
-The same approach available also with `css-in-js` function `css`:
+We can use `css-in-js` approach here with the function `css`:
 
 <Editor filename={__filename}>{{
     code: [
@@ -156,8 +127,54 @@ And the same with the `styled` function:
     }}
 </Editor>
 
-Cool! You can also notice here that **reshadow** allows you to use `css-in-js` approaches with [template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals).
 Important notice here is that all styles were processed during the building, so **there is no runtime styles processing**.
+
+It is also possible to use **reshadow** with separate `css` files.
+
+Add `files` option to the babel plugin and `reshadow/babel` will handle them:
+
+_.babelrc_
+
+```json
+{"plugins": ["reshadow/babel", {"files": "\\.css$"}]}
+```
+
+<Editor filename={__filename}>{{
+    files: {
+        './styles.css': `
+            button {
+                font-size: 16px;
+                cursor: pointer;
+                padding: 10px 15px;
+                border-radius: 20px;
+                border: 2px solid;
+                background-color: white;
+                color: steelblue;
+            }
+        `
+    },
+    code: [
+        `
+        import styles from './styles.css'\n
+
+        const Button = ({children, ...props}) => styled(styles)(
+            <button {...props}>
+                {children}
+            </button>,
+        );
+        `,
+        `
+        <Button>
+            Simple Button
+        </Button>
+    `,
+    ],
+
+}}
+
+</Editor>
+
+Note that with `styled(styles)` you can apply styles to the Virtual DOM. In addition, you can apply to the `styled` function any number of arguments, like `styled(styles1, styles2, ...)`, so the `styled` function will compose all of them together.
 
 You can combine `css-modules` and `css-in-js` approaches like you or your team want.
 
