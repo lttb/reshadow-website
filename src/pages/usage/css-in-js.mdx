@@ -6,3 +6,67 @@ route: /usage/css-in-js
 ---
 
 # css-in-js
+
+## Common
+
+If you are used to modern css-in-js approaches than writing your styles in your javascript files is for you.
+
+```jsx
+import styled from 'reshadow'
+
+const Component = ({children, ...props}) => styled`
+    container {
+        /* container styles */
+    }
+    inner {
+        /* inner styles */
+    }
+`(
+    <container {...props}>
+        <inner>
+            {children}
+        </inner>
+    </container>
+)
+```
+
+## Dynamic variables
+
+Since the `styled` function is inside the component you can freely work with props and use them as dynamic variables in your styles.
+
+```jsx
+import styled from 'reshadow'
+
+const Component = ({children, color = 'hotpink', ...props}) => styled`
+    container {
+        color: ${color};
+    }
+`(
+    <container {...props}>
+        {children}
+    </container>
+)
+```
+
+## Class names
+
+If you use third party components which require you to pass class names to style its internals you can use `styled.styles` to extract the hashed classnames
+
+```jsx
+import styled from 'reshadow'
+import {OtherComponent} from 'third-party-lib'
+
+const Component = ({children, ...props}) => styled`
+    .wrapper {/* styles */}
+    .inner {/* styles */}
+    .another {/* styles */}
+`(
+    <OtherComponent {...props} classes={{
+        wrapper: styled.styles.wrapper,
+        inner: styled.styles.inner,
+        another: styled.styles.another,
+    }}>
+        {children}
+    </OtherComponent>
+)
+```
