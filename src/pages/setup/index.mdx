@@ -98,3 +98,41 @@ module.exports = {
 };
 ```
 
+## Next.js
+
+If you use [Nextjs](https://github.com/zeit/next.js/) you can start using reshadow in four steps.
+
+```
+npm install -D reshadow @zeit/next-css postcss-preset-env
+```
+
+next.config.js
+```js
+const withCSS = require('@zeit/next-css');
+
+module.exports = withCSS({
+    cssModules: true,
+    cssLoaderOptions: {
+        importLoaders: 1,
+        localIdentName: "[local]___[hash:base64:5]",
+    }
+});
+```
+
+.babelrc.js
+```js
+module.exports = {
+    presets: ['next/babel'],
+    plugins: ['reshadow/babel']
+};
+```
+
+postcss.config.js
+```js
+module.exports = {
+    plugins: [
+        require('postcss-preset-env')({stage: 0}),
+        require('reshadow/postcss')
+    ]
+}
+```
