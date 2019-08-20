@@ -118,7 +118,15 @@ module.exports = {
             `,
         },
     },
-    menu: ['reshadow', 'motivation', 'concepts', 'usage', 'advanced', 'setup'],
+    menu: [
+        'reshadow',
+        'motivation',
+        'concepts',
+        'usage',
+        'advanced',
+        'setup',
+        'migration',
+    ],
     plugins: [
         cssPlugin({
             preprocessor: 'postcss',
