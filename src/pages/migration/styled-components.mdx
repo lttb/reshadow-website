@@ -10,25 +10,28 @@ If you are one of those, who use styled-components in your project, this guide i
 
 ## Motivation
 
-API `reshadow` makes it easy to combine the `css-in-js` and `css-modules` approach, so the migration for you will be as simple as possible.
-However, the API `reshadow` and `styled-components` are different, since the latter has several disadvantages:
-- Typings
-- Wrapper over the component, since the API `styled-components` is built on `HOC`
-- Control over the external and internal interface of the component
-- The inconvenience of mapping complex states
-- Only for `React`
+`Reshadow` allows us to combine the `css-in-js` and `css-modules` approach, so the migration for you will be as simple as possible.
+However, reshadow`and`styled-components` API's are different, since the latter has several disadvantages:
+
+-   Typings
+-   Wrapper over the component, since the API `styled-components` is built on `HOC`
+-   Control over the external and internal interface of the component
+-   The inconvenience of mapping complex states
+-   Only for `React`
 
 ## Migration Approaches
 
 Migration can be divided into two approaches:
-- [Single](#single) - this is for you, if you don't want to rewrite the entire project immediately to reshadow
-- [Iterative](#iterative) - migration to reshadow, by gradually rewriting components
+
+-   [Single](#single) - this is for you, if you don't want to rewrite the entire project immediately to reshadow
+-   [Iterative](#iterative) - migration to reshadow, by gradually rewriting components
 
 ## Single
 
 Reshadow has a compatible API with `styled-components`. You need to do the following:
-- install package `@reshadow/styled` with your favorite package manager
-- change imports from `styled-components` to `@reshadow/styled` with your favorite editor ([VSCode](https://code.visualstudio.com/docs/editor/codebasics#_search-and-replace), [Intellij](https://www.jetbrains.com/help/webstorm/tutorial-finding-and-replacing-text-using-regular-expressions.html#Tutorial_Finding_and_Replacing_Text_Using_Regular_Expressions.xml))
+
+-   install package `@reshadow/styled` with your favorite package manager
+-   change imports from `styled-components` to `@reshadow/styled` with your favorite editor ([VSCode](https://code.visualstudio.com/docs/editor/codebasics#_search-and-replace), [Intellij](https://www.jetbrains.com/help/webstorm/tutorial-finding-and-replacing-text-using-regular-expressions.html#Tutorial_Finding_and_Replacing_Text_Using_Regular_Expressions.xml))
 
 ```js
 import styled from 'styled-components';
@@ -43,9 +46,8 @@ You can see examples in the talk at [React Russia](https://youtu.be/edcRISVmMxY?
 
 ## Iterative
 
-The `styled-components` remains a library, that uses the `css-in-js` approach, using `React` wrappers to apply styles to the component. 
+The `styled-components` remains a library, that uses the `css-in-js` approach, using `React` wrappers to apply styles to the component.
 `reshadow` uses a slightly different approach, that allows you to write a semantically correct layout, without creating unnecessary wrappers around the component.
-
 
 ### Getting Started
 
@@ -64,31 +66,33 @@ To configure `reshadow` in the project, use the instruction [Setup](/setup).
 If you have configured [extracting styles](/setup#webpack), you can put styles into a separate `css` file.
 
 `styled-components`
+
 ```js
 import styled from 'styled-components';
 
 const Button = styled.button`
-   font-size: 16px;
-   color: white;
-   background: black;
-   border: 1px solid;
-   border-radius: 4px;
+    font-size: 16px;
+    color: white;
+    background: black;
+    border: 1px solid;
+    border-radius: 4px;
 `;
 ```
 
 `reshadow`
+
 ```jsx
 import styled from 'reshadow';
 
 // you can put styles in a separate file `style.css`
 const Button = props => styled`
-   button {
-      font-size: 16px;
-      color: white;
-      background: black;
-      border: 1px solid;
-      border-radius: 4px;
-   }
+    button {
+        font-size: 16px;
+        color: white;
+        background: black;
+        border: 1px solid;
+        border-radius: 4px;
+    }
 `(<button {...props} />);
 ```
 
@@ -97,79 +101,79 @@ const Button = props => styled`
 Consider the case, if you need to adapt to the component's props.
 
 `styled-components`
+
 ```jsx
 import styled from 'styled-components';
 
 const Button = styled.button`
-   font-size: 16px;
-   color: ${props => props.primary ? "black" : "white"};
-   background: ${props => props.primary ? "yellow" : "black"};
-   border: 1px solid;
-   border-radius: 4px;
+    font-size: 16px;
+    color: ${props => (props.primary ? 'black' : 'white')};
+    background: ${props => (props.primary ? 'yellow' : 'black')};
+    border: 1px solid;
+    border-radius: 4px;
 `;
 
-const App = () => (
-     <Button primary>Click on me !</Button>
-)
+const App = () => <Button primary>Click on me !</Button>;
 ```
 
 `reshadow`
+
 ```jsx
 import styled from 'reshadow';
 
 // you can put styles in a separate file `style.css`
 const Button = ({primary, ...props}) => styled`
-   button {
-      font-size: 16px;
-      color: white;
-      background: black;
-      border: 1px solid;
-      border-radius: 4px;
-   }
+    button {
+        font-size: 16px;
+        color: white;
+        background: black;
+        border: 1px solid;
+        border-radius: 4px;
+    }
 
-   button[|primary] {
-      background: yellow;
-      color: black;
-   }
+    button[|primary] {
+        background: yellow;
+        color: black;
+    }
 `(<button use:primary={primary} {...props} />);
 
-const App = () => (
-     <Button primary>Click on me !</Button>
-)
+const App = () => <Button primary>Click on me !</Button>;
 ```
 
-As you can see, the `button` uses the `use` namespace, it is used to define [modifiers](/concepts#props-and-modifiers). 
+As you can see, the `button` uses the `use` namespace, it is used to define [modifiers](/concepts#props-and-modifiers).
 
 ### Dynamic Variables
 
-If you need mapping on dynamic values, you can write notation in `css-in-js`, see [Dynamic Variables](/usage/css-in-js#dynamic-variables).
+If you need to map props to dynamic styles, you can write notation in `css-in-js`, see [Dynamic Variables](/usage/css-in-js#dynamic-variables).
 
 `styled-components`
+
 ```jsx
 import styled from 'styled-components';
 
 const Button = styled.button`
-   font-size: 16px;
-   color: ${props => props.color};
-   background: black;
-   border: 1px solid;
-   border-radius: 4px;
+    font-size: 16px;
+    color: ${props => props.color};
+    background: black;
+    border: 1px solid;
+    border-radius: 4px;
 `;
 ```
 
 `reshadow`
+
 ```jsx
 import styled from 'reshadow';
 
 // you can't put styles in a separate file `style.css`, because it's using dynamic variables
 const Button = ({color, ...props}) => styled`
-   button {
-      font-size: 16px;
-      color: ${color};
-      background: black;
-      border: 1px solid;
-      border-radius: 4px;
-   }
+    button {
+        font-size: 16px;
+        color: ${color};
+        background: black;
+        border: 1px solid;
+        border-radius: 4px;
+    }
 `(<button {...props} />);
 ```
 
