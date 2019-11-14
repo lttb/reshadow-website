@@ -134,5 +134,34 @@ module.exports = {
         require('postcss-preset-env')({stage: 0}),
         require('reshadow/postcss')
     ]
-}
+};
+```
+
+## Parcel
+
+If you use [parcel](https://github.com/parcel-bundler/parcel) you can start using reshadow by adding babel plugin and optional postcss plugin.
+
+```
+npm install -D reshadow
+```
+
+Add babel plugin and this is enough for css-in-js approach to work.
+
+babel.config.js
+```js
+module.exports = {
+    plugins: ['reshadow/babel']
+};
+```
+
+If you prefer to keep your styles in separate css files and you use postcss make sure to enable css modules by setting `module: true` and add reshadow plugin like shown below.
+
+postcss.config.js
+```js
+module.exports = {
+    module: true,
+    plugins: [
+        require('reshadow/postcss')
+    ]
+};
 ```
