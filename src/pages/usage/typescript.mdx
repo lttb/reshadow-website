@@ -1,0 +1,45 @@
+---
+name: typescript
+menu: usage
+order: 1
+route: /usage/typescript
+---
+
+# Typescript
+
+To start using reshadow with typescript there is only one constraint - your application has to be transpiled using `babel` instead of `tsc`. Since it is impossible to introduce new syntax (namespaces and custom elements) to typescript.
+
+Consider a component below written in javascript or javascript + flow
+```jsx
+import styled from 'reshadow';
+
+const Component = ({children, size, ...props}) => styled`
+    container {/* container styles */}
+    inner {/* inner styles */}
+`(
+    <container use:size={size} {...props}>
+        <inner>
+            {children}
+        </inner>
+    </container>
+);
+```
+
+And its typescript equivalent
+```tsx
+import styled, {use} from 'reshadow';
+
+const Container = 'div';
+const Inner = 'div';
+
+const Component = ({children, size, ...props}) => styled`
+    Container {/* Container styles */}
+    Inner {/* Inner styles */}
+`(
+    <Container {...use({size})} {...props}>
+        <Inner>
+            {children}
+        </Inner>
+    </Container>
+);
+```
