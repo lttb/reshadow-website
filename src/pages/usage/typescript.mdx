@@ -7,7 +7,7 @@ route: /usage/typescript
 
 # Typescript
 
-To start using reshadow with typescript there is only one constraint - your application has to be transpiled using `babel` instead of `tsc`. Since it is impossible to introduce new syntax (namespaces and custom elements) to typescript.
+To start using reshadow with typescript there is only one constraint - your application has to be transpiled using `babel` instead of `tsc`. Unfortunately `tsc` does not provide a way to work with the source JSX.
 
 Consider a component below written in javascript or javascript + flow
 ```jsx
@@ -41,5 +41,28 @@ const Component = ({children, size, ...props}) => styled`
             {children}
         </Inner>
     </Container>
+);
+```
+
+If you do not want to create variables for the tag names. You can add the custom element type reference to your `*.d.ts` file like below
+
+```
+/// <reference path="./node_modules/reshadow/elements.d.ts" />
+```
+
+And write your component with custom element names. Please note that `as` property is **required** for typescript to be used for custom elements.
+
+```tsx
+import styled, {use} from 'reshadow';
+
+const Component = ({children, size, ...props}) => styled`
+    container {/* container styles */}
+    inner {/* inner styles */}
+`(
+    <container as="div" {...use({size})} {...props}>
+        <inner as="div">
+            {children}
+        </inner>
+    </container>
 );
 ```
