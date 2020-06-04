@@ -47,6 +47,43 @@ const styles = css`
     }
 `;
 
+const Banner = () => styled`
+    banner {
+        background: #222;
+        color: #eee;
+        padding: 16px 32px;
+        text-align: center;
+        position: relative;
+        z-index: 1001;
+    }
+    a {
+        color: #61dafb;
+        text-decoration: none;
+    }
+    /**
+     * hides github triangle link
+     */
+    :global(#root) > :global(div) > :global(div) > :global(a) {
+        z-index: -1;
+    }
+    @media (max-width: 600px) {
+        banner {
+            padding: 16px 4px;
+        }
+    }
+`(
+    <banner>
+        Black Lives Matter.{' '}
+        <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://support.eji.org/give/153413/#!/donation/checkout"
+        >
+            Support&nbsp;the&nbsp;Equal&nbsp;Justice&nbsp;Initiative.
+        </a>
+    </banner>,
+);
+
 const Page = ({children, ...props}) => {
     const {doc} = props;
 
@@ -128,6 +165,7 @@ const Theme = ({children}) => {
                     page: Page,
                 }}
             >
+                <Banner />
                 {children}
             </ComponentsProvider>
         </ThemeProvider>
